@@ -1,0 +1,65 @@
+/* Login Container */
+.login-container {
+  max-width: 400px;
+  margin: 0 auto;
+  margin-top: 8rem;
+  margin-bottom: 12rem;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+/* Login Title */
+.login-title {
+  margin-bottom: 20px;
+  text-align: center;
+  color: #333;
+}
+
+/* Form Group */
+.form-group {
+  margin-bottom: 15px;
+}
+
+/* Form Label */
+.form-label {
+  display: block;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+/* Form Input */
+.form-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+/* Error Message */
+.error-message {
+  color: red;
+  font-size: 14px;
+}
+
+/* Submit Button */
+.submit-btn {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #27ae60;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  margin: auto
+}
+
+/* Submit Button Hover */
+.submit-btn:hover {
+  background-color: #27ae60;
+  
+}
