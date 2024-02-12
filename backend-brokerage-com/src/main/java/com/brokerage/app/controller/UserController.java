@@ -3,6 +3,7 @@ package com.brokerage.app.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,14 +14,19 @@ import com.brokerage.app.request.UserLoginRequest;
 import com.brokerage.app.services.UserService;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/users")
 public class UserController {
 
     @Autowired
     private UserService userService;
+    
+ 
 
-    @PostMapping("/register")
-    public ResponseEntity<Object> addUser(@RequestBody UserDTO userDTO) {
+    @PostMapping(value="/register")
+    public ResponseEntity<?> addUser(@RequestBody UserDTO userDTO) throws Exception {
+    	
+        
         UserDTO newUser = userService.addUser(userDTO);
         if (newUser != null) {
             return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
