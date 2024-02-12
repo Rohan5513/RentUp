@@ -4,12 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.brokerage.app.dto.UserDTO;
+import com.brokerage.app.request.ChangePasswordRequest;
 import com.brokerage.app.request.UserLoginRequest;
 import com.brokerage.app.services.UserService;
 
@@ -36,12 +39,24 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Object> loginUser(@RequestBody UserLoginRequest loginRequest) {
+    public ResponseEntity<?> loginUser(@RequestBody UserLoginRequest loginRequest) {
         UserDTO user = userService.loginUser(loginRequest.getMobileNumber(), loginRequest.getPassword());
         if (user != null) {
+        	System.out.println(user);
             return ResponseEntity.ok(user);
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+    }
+    
+    @PutMapping("/{userId}")
+    public ResponseEntity<?> updateUser(@PathVariable Integer userId  , @RequestBody UserDTO updatedUser) {
+        // Assuming you have a service method to handle password change logic
+        UserDTO userDTO = userService.updateUser( userId , updatedUser);
+        if (userDTO!=null) {
+            return ResponseEntity.ok(userDTO);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Failed to change password: Incorrect old password");
         }
     }
 }
