@@ -5,12 +5,12 @@ import "./style.css";
 
 const Signup = () => {
   const initialFormData = {
-    firstName: "",
-    lastName: "",
-    mobileNumber: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
+    userName: "",
+    userEmail: "",
+    userPassword: "",
+    userContactNumber: "",
+    userProfilePicture: null,
+    propertiesLeft: 5, // Set the default value to 5
   };
 
   const [formData, setFormData] = useState(initialFormData);
@@ -20,42 +20,57 @@ const Signup = () => {
   const history = useHistory();
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    const { name, value, type, files } = e.target;
+
+    // If the input is a file, handle it separately
+    if (type === "file") {
+      setFormData({
+        ...formData,
+        [name]: files[0],
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
   };
 
   const validateForm = () => {
     const errors = {};
-    if (!formData.firstName.trim()) {
-      errors.firstName = "Please enter your First Name";
+
+    if (!formData.userName.trim()) {
+      errors.userName = "Please enter your Username";
     }
-    if (!formData.lastName.trim()) {
-      errors.lastName = "Please enter your Last Name";
+
+    if (!formData.userEmail.trim()) {
+      errors.userEmail = "Please enter your Email Address";
+    } else if (!/\S+@\S+\.\S+/.test(formData.userEmail)) {
+      errors.userEmail = "Please enter a valid Email Address";
     }
-    if (!formData.mobileNumber.match(/^\d{10}$/)) {
-      errors.mobileNumber = "Please enter a valid 10-digit Mobile Number";
+
+    if (!formData.userContactNumber.match(/^\d{10}$/)) {
+      errors.userContactNumber =
+        "Please enter a valid 10-digit Mobile Number";
     }
-    if (!formData.email.trim()) {
-      errors.email = "Please enter your Email Address";
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      errors.email = "Please enter a valid Email Address";
-    }
-    if (formData.password.length < 6) {
-      errors.password = "Password must be at least 6 characters long";
+
+    if (!formData.userPassword.trim()) {
+      errors.userPassword = "Please enter your Password";
+    } else if (formData.userPassword.length < 6) {
+      errors.userPassword = "Password must be at least 6 characters long";
     } else if (
       !/(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}/.test(
-        formData.password
+        formData.userPassword
       )
     ) {
-      errors.password =
+      errors.userPassword =
         "Password must contain at least one uppercase letter, one lowercase letter, one digit, one special character, and be at least 6 characters long";
     }
-    if (formData.password !== formData.confirmPassword) {
+
+    if (formData.userPassword !== formData.confirmPassword) {
       errors.confirmPassword = "Passwords do not match";
     }
+
     setErrors(errors);
     return Object.keys(errors).length === 0;
   };
@@ -63,12 +78,23 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const isValid = validateForm();
+
     if (isValid) {
       try {
+        const formDataToSend = new FormData();
+        Object.keys(formData).forEach((key) => {
+          formDataToSend.append(key, formData[key]);
+        });
+
         const response = await axios.post(
           "http://localhost:8080/users/register",
-          formData
+          formDataToSend, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
         );
+
         if (response.status === 200) {
           setMessage("Signup successful!");
           setFormData(initialFormData);
@@ -98,61 +124,51 @@ const Signup = () => {
       {message && <div className="message">{message}</div>}
       <form onSubmit={handleSubmit} className="signup-form">
         <div className="form-group">
-          <label htmlFor="firstName">First Name:</label>
+          <label htmlFor="userName">Username:</label>
           <input
             type="text"
-            name="firstName"
-            value={formData.firstName}
+            name="userName"
+            value={formData.userName}
             onChange={handleChange}
           />
-          {errors.firstName && (
-            <div className="error-message">{errors.firstName}</div>
+          {errors.userName && (
+            <div className="error-message">{errors.userName}</div>
           )}
         </div>
         <div className="form-group">
-          <label htmlFor="lastName">Last Name:</label>
-          <input
-            type="text"
-            name="lastName"
-            value={formData.lastName}
-            onChange={handleChange}
-          />
-          {errors.lastName && (
-            <div className="error-message">{errors.lastName}</div>
-          )}
-        </div>
-        <div className="form-group">
-          <label htmlFor="mobileNumber">Mobile Number:</label>
-          <input
-            type="text"
-            name="mobileNumber"
-            value={formData.mobileNumber}
-            onChange={handleChange}
-          />
-          {errors.mobileNumber && (
-            <div className="error-message">{errors.mobileNumber}</div>
-          )}
-        </div>
-        <div className="form-group">
-          <label htmlFor="email">Email:</label>
+          <label htmlFor="userEmail">Email:</label>
           <input
             type="email"
-            name="email"
-            value={formData.email}
+            name="userEmail"
+            value={formData.userEmail}
             onChange={handleChange}
           />
-          {errors.email && <div className="error-message">{errors.email}</div>}
+          {errors.userEmail && (
+            <div className="error-message">{errors.userEmail}</div>
+          )}
         </div>
         <div className="form-group">
-          <label htmlFor="password">Password:</label>
+          <label htmlFor="userContactNumber">Mobile Number:</label>
           <input
-            type="password"
-            name="password"
-            value={formData.password}
+            type="text"
+            name="userContactNumber"
+            value={formData.userContactNumber}
             onChange={handleChange}
           />
-          {errors.password && (
-            <div className="error-message">{errors.password}</div>
+          {errors.userContactNumber && (
+            <div className="error-message">{errors.userContactNumber}</div>
+          )}
+        </div>
+        <div className="form-group">
+          <label htmlFor="userPassword">Password:</label>
+          <input
+            type="password"
+            name="userPassword"
+            value={formData.userPassword}
+            onChange={handleChange}
+          />
+          {errors.userPassword && (
+            <div className="error-message">{errors.userPassword}</div>
           )}
         </div>
         <div className="form-group">
@@ -165,6 +181,18 @@ const Signup = () => {
           />
           {errors.confirmPassword && (
             <div className="error-message">{errors.confirmPassword}</div>
+          )}
+        </div>
+        <div className="form-group">
+          <label htmlFor="userProfilePicture">Profile Picture:</label>
+          <input
+            type="file"
+            name="userProfilePicture"
+            accept="image/*"
+            onChange={handleChange}
+          />
+          {errors.userProfilePicture && (
+            <div className="error-message">{errors.userProfilePicture}</div>
           )}
         </div>
         <div className="button-group">

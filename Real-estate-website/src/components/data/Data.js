@@ -1,5 +1,34 @@
-export const nav = [
-  {
+// export const nav = [
+//   {
+//     text: "home",
+//     path: "/",
+//   },
+//   {
+//     text: "about",
+//     path: "/about",
+//   },
+//   {
+//     text: "services",
+//     path: "/services",
+//   },
+//   {
+//     text: "blog",
+//     path: "/blog",
+//   },
+//   {
+//     text: "pricing",
+//     path: "/pricing",
+//   },
+//   {
+//     text: "contact",
+//     path: "/contact",
+//   },
+    
+// ]
+
+export const getNavData = (user) => {
+  const navData = [
+      {
     text: "home",
     path: "/",
   },
@@ -23,8 +52,13 @@ export const nav = [
     text: "contact",
     path: "/contact",
   },
-  
-]
+    // Your other navigation items here
+    { text: user ? 'Logout' : 'Login', path: user? '/logout':'/login'},
+    { text:user? 'Profile':'Sign up', path: user?'/profile':'/signup' },
+  ];
+
+  return navData;
+};
 export const featured = [
   {
     cover: "../images/hero/h1.png",

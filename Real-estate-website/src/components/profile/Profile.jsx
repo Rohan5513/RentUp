@@ -1,16 +1,33 @@
-import React, { useState } from "react";
+// Profile.jsx
+import React, { useState , useEffect } from "react";
 import { useUser } from "../common/UserProvider";
 import axios from "axios";
+import "./Profile.css"; // Import the CSS file
 
 const Profile = () => {
   const { user, setUser } = useUser();
   const [formData, setFormData] = useState({
     userEmail: user.userEmail,
-      userName: user.userName,
-     userProfilePicture: user.userProfilePicture
+    userName: user.userName,
+    userProfilePicture: user.userProfilePicture,
   });
   const [editMode, setEditMode] = useState(false);
 
+  const [userProfilePictureRender, setUserProfilePicture] = useState(null);
+
+  useEffect(() => {
+    if (user && user.userProfilePicture) {
+      const byteArray = new Uint8Array(user.userProfilePicture); // Assuming user.userProfilePicture is the byte array
+    console.log(user.userProfilePicture);
+      const base64String = btoa(
+        Array.from(byteArray)
+          .map((byte) => String.fromCharCode(byte))
+          .join("")
+      );
+      setUserProfilePicture(`data:image/jpeg;base64,${base64String}`);
+      console.log('String is '+base64String);
+    }
+  }, [user,userProfilePictureRender]);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -21,10 +38,15 @@ const Profile = () => {
     try {
       const response = await axios.put(
         `http://localhost:8080/users/${user.userId}`,
-        formData
+        formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data", // Set content type to multipart/form-data
+        },
+      }
       );
-      setUser(response.data); // Update user data in UserProvider
-      setEditMode(false); // Exit edit mode
+      setUser(response.data);
+      setEditMode(false);
       alert("Profile updated successfully!");
     } catch (error) {
       console.error("Failed to update profile:", error);
@@ -33,10 +55,10 @@ const Profile = () => {
   };
 
   return (
-    <div>
+    <div className="profile-container">
       <h2>Profile</h2>
       {editMode ? (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="profile-form">
           <div>
             <label>Email:</label>
             <input
@@ -58,6 +80,9 @@ const Profile = () => {
           </div>
           <div>
             <label>Profile Picture:</label>
+            {userProfilePictureRender && (
+        <img src={userProfilePictureRender} alt="ProfilePicture" />
+      )}
             <input
               type="file"
               accept="image/*"
@@ -69,20 +94,36 @@ const Profile = () => {
               }
             />
           </div>
-          <button type="submit">Submit</button>
+          <div className="button-group">
+            <button type="submit" className="submit-btn">
+              Submit
+            </button>
+            <button
+              type="button"
+              className="cancel-btn"
+              onClick={() => setEditMode(false)}
+            >
+              Cancel
+            </button>
+          </div>
         </form>
       ) : (
-        <div>
+        <div className="profile-info">
           <p>Email: {user.userEmail}</p>
-          <p>Name: {user.userName}</p>
-          <p>Profile Picture: {user.userProfilePicture}</p>
+            <p>Name: {user.userName}</p>
+            <p>Is Admin:{user.isAdmin}</p>
+          <p>Profile Picture:
+          {userProfilePictureRender && (
+        <img src={userProfilePictureRender} alt="ProfilePicture" />
+      )}
+      </p>
           <p>Contact Number: {user.userContactNumber}</p>
           <p>Properties Left: {user.propertiesLeft}</p>
+          <button onClick={() => setEditMode(true)} className="edit-btn">
+            Edit
+          </button>
         </div>
       )}
-      <button onClick={() => setEditMode(!editMode)}>
-        {editMode ? "Cancel" : "Edit"}
-      </button>
     </div>
   );
 };

@@ -36,6 +36,7 @@ public class User {
 
     @Column(name = "properties_left")
     private Integer propertiesLeft;
-
+    
+    
     // Constructors, getters, and setters
 }

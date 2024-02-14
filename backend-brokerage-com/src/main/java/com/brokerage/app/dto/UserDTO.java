@@ -11,6 +11,7 @@ public class UserDTO {
     private String userContactNumber;
     private byte[] userProfilePicture;
     private Integer propertiesLeft;
+    
 
     // Constructors, getters, and setters
 }
