@@ -1,0 +1,35 @@
+.property-management {
+  width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.property-management h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.property-management .form label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.property-management .form select,
+.property-management .form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.property-management .form button {
+  width: 100%;
+  padding: 10px;
+  background-color: #27ae60;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.property-management .form button:hover {
+  background-color: #27ae60;
+}

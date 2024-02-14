@@ -36,9 +36,13 @@ const Header = () => {
                     <button className="btn1" onClick={handleLogout}>
                       {item.text}
                     </button>
-                  ) : (
-                    // If not logout button, render regular link
+                  ) : user && item.path === "/add" ? (
                     <Link to={item.path}>{item.text}</Link>
+                  ) : item.path !== "/add" ? (
+                    // If not logout button or add property link, render regular link
+                    <Link to={item.path}>{item.text}</Link>
+                  ) : (
+                    <p></p>
                   )}
                 </li>
               ))}

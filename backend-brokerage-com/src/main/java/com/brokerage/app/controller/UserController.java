@@ -51,6 +51,7 @@ public class UserController {
 	@PostMapping("/login")
 	public ResponseEntity<?> loginUser(@RequestBody UserLoginRequest loginRequest) {
 		UserDTO user = userService.loginUser(loginRequest.getMobileNumber(), loginRequest.getPassword());
+		System.out.println(user);
 		if (user != null) {
 			System.out.println(user);
 			return ResponseEntity.ok(user);

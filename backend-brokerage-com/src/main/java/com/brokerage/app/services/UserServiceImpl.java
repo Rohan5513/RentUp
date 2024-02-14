@@ -48,6 +48,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO loginUser(String mobileNumber, String password) {
         User user = userRepository.findByContactNumber(mobileNumber);
+        
         if (user != null && passwordEncoder.verifyPassword(password, user.getPassword())) {
             return customMapper.mapUserToDTO(user);
         }
