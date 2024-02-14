@@ -11,6 +11,8 @@ import Contact from "../contact/Contact";
 import Signup from "../signup/signup";
 import Login from "../login/login";
 import Profile from "../profile/Profile";
+import PropertyManagement from "../property/Property";
+
 const Pages = () => {
   return (
     <>
@@ -26,7 +28,7 @@ const Pages = () => {
           <Route exact path="/signup" component={Signup} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/profile" component={Profile} />
-          
+          <Route exact path="/property" component={PropertyManagement} />
         </Switch>
         <Footer />
       </Router>

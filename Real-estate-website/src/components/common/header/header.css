@@ -73,3 +73,8 @@ header .button button {
   border: none; /* Remove border */
   cursor: pointer;
 }
+
+.btn1{
+  background-color: #fff;
+  color: black;
+}

@@ -52,6 +52,10 @@ export const getNavData = (user) => {
     text: "contact",
     path: "/contact",
   },
+  {
+    text: "add property",
+    path: "/property",
+  },
     // Your other navigation items here
     { text: user ? 'Logout' : 'Login', path: user? '/logout':'/login'},
     { text:user? 'Profile':'Sign up', path: user?'/profile':'/signup' },
@@ -389,4 +393,28 @@ export const teamMembers = [
     },
     // Add details of other team members as needed
   ];
+
+  export const citiesData = [
+    { id: 1, name: "Pune" },
+    { id: 2, name: "Mumbai" },
+    // Add more cities as needed
+  ];
+  
+  export const areasData = {
+    "Pune": [
+      { id: 1, name: "Pashan" },
+      { id: 2, name: "Baner" },
+      // Add more areas in City A as needed
+    ],
+    "Mumbai": [
+      { id: 1, name: "churgate" },
+      { id: 2, name: "Andheri" },
+      // Add more areas in City B as needed
+    ],
+    // Add more cities and their respective areas as needed
+  };
+  
+
+
+
 
