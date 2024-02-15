@@ -1,0 +1,10 @@
+package com.rentup.RentUp.services;
+
+import java.util.List;
+
+public interface AreaService {
+
+    List<String> getAllAreas();
+
+    List<String> getAreaByCityName(String cityName);
+}
