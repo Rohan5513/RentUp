@@ -66,7 +66,8 @@ public class PropertyServiceImpl implements PropertyService {
 
         Property property =propertyMapper.mapRequestToEntity(propertyRequest);
 
-        property.setArea(areaRepository.findById(propertyRequest.getAreaId()).orElseThrow());
+        property.setArea(areaRepository.findByAreaName(propertyRequest.getAreaId()));
+        System.out.println(property);
         property.setUser(userRepository.findById(propertyRequest.getUserId()).orElseThrow() );
         if(images!=null) {
             // Set images in the property entity based on your data model

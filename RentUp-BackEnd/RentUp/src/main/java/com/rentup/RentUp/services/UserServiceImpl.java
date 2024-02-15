@@ -47,6 +47,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO loginUser(String mobileNumber, String password) {
+    	System.out.println(passwordEncoder.encodePassword("Pass@123"));
         User user = userRepository.findByContactNumber(mobileNumber);
 
         if (user != null && passwordEncoder.verifyPassword(password, user.getPassword())) {
@@ -96,7 +97,9 @@ public class UserServiceImpl implements UserService {
         user.setName(userName);
         byte[] userProfilePictureBytes=null;
         try {
+        	if(userProfilePicture !=null) {
             userProfilePictureBytes = userProfilePicture.getBytes();
+        	}
         } catch (IOException e) {
             System.out.println(e.getMessage());
             e.printStackTrace();

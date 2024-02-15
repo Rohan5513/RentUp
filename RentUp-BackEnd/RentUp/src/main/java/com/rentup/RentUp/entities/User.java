@@ -37,5 +37,6 @@ public class User {
     @Column(name = "properties_left")
     private Integer propertiesLeft;
 
-
+    @Column(name ="subscription_type", columnDefinition = "VARCHAR(255) DEFAULT NULL")
+    private String subscriptionType;
 }

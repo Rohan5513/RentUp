@@ -26,6 +26,19 @@
     
 // ]
 
+import  axios   from "axios";
+
+export const getCities = async () => {
+  try {
+    const response = await axios.get("http://localhost:8080/city/"); // Update the API endpoint
+    console.log('from here'+response.data)
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching cities:", error);
+    return [];
+  }
+};
+
 export const getNavData = (user) => {
   const navData = [
       {
@@ -264,79 +277,79 @@ export const team = [
 ]
 export const price = [
   {
-    plan: "Basic",
-    price: "29",
-    ptext: "per user, per month",
+    plan: "Silver",
+    price: "199",
+    ptext: "per month",
     list: [
       {
         icon: <i class='fa-solid fa-check'></i>,
-        text: "99.5% Uptime Guarantee",
+        text: "Login from 2 Devices",
       },
       {
         icon: <i class='fa-solid fa-check'></i>,
-        text: "120GB CDN Bandwidth",
+        text: "Add Free Experience",
       },
       {
         icon: <i class='fa-solid fa-check'></i>,
-        text: "5GB Cloud Storage",
+        text: "1 month customer support for rented property",
       },
-      { change: "color", icon: <i class='fa-solid fa-x'></i>, text: "Personal Help Support" },
-      { change: "color", icon: <i class='fa-solid fa-x'></i>, text: "Enterprise SLA" },
+      { change: "color", icon: <i class='fa-solid fa-x'></i>, text: "List Unlimited Properties in a month" },
+      { change: "color", icon: <i class='fa-solid fa-x'></i>, text: "Contact Unlimited Brokers" },
     ],
   },
   {
     best: "Best Value",
-    plan: "Standard",
-    price: "49",
-    ptext: "per user, per month",
+    plan: "Gold",
+    price: "299",
+    ptext: "per month",
     list: [
       {
         icon: <i class='fa-solid fa-check'></i>,
-        text: "99.5% Uptime Guarantee",
+        text: "Login from 4 Devices",
       },
       {
         icon: <i class='fa-solid fa-check'></i>,
-        text: "150GB CDN Bandwidth",
+        text: "Add Free Experience",
       },
       {
         icon: <i class='fa-solid fa-check'></i>,
-        text: "10GB Cloud Storage",
+        text: "2 month customer support for rented property",
       },
       {
         icon: <i class='fa-solid fa-check'></i>,
-        text: "Personal Help Support",
+        text: "List Unlimited Properties in a month",
       },
       {
         change: "color",
         icon: <i class='fa-solid fa-x'></i>,
-        text: "Enterprise SLA",
+        text: "Contact Unlimited Brokers",
       },
     ],
   },
   {
     plan: "Platinum",
-    price: "79",
-    ptext: "2 user, per month",
+    price: "499",
+    ptext: "per month",
     list: [
       {
         icon: <i class='fa-solid fa-check'></i>,
-        text: "100% Uptime Guarantee",
+        text: "Login from 8 Devices",
       },
       {
         icon: <i class='fa-solid fa-check'></i>,
-        text: "200GB CDN Bandwidth",
+        text: "Add Free Experience",
       },
       {
         icon: <i class='fa-solid fa-check'></i>,
-        text: "20GB Cloud Storage",
+        text: "List Unlimited Properties in a month",
       },
       {
         icon: <i class='fa-solid fa-check'></i>,
-        text: "Personal Help Support",
+        text: "1 month customer support for rented property",
       },
       {
         icon: <i class='fa-solid fa-check'></i>,
-        text: "Enterprise SLA",
+        text: "Contact Unlimited Brokers",
       },
     ],
   },
@@ -394,25 +407,17 @@ export const teamMembers = [
     // Add details of other team members as needed
   ];
 
-  export const citiesData = [
-    { id: 1, name: "Pune" },
-    { id: 2, name: "Mumbai" },
-    // Add more cities as needed
-  ];
   
-  export const areasData = {
-    "Pune": [
-      { id: 1, name: "Pashan" },
-      { id: 2, name: "Baner" },
-      // Add more areas in City A as needed
-    ],
-    "Mumbai": [
-      { id: 1, name: "churgate" },
-      { id: 2, name: "Andheri" },
-      // Add more areas in City B as needed
-    ],
-    // Add more cities and their respective areas as needed
-  };
+  
+  export const getAreas = async (city) => {
+  try {
+    const response = await axios.get(`http://localhost:8080/area/${city}`); // Update the API endpoint for areas
+    return response.data;
+  } catch (error) {
+    console.error(`Error fetching areas for ${city}:`, error);
+    return [];
+  }
+};
   
 
 

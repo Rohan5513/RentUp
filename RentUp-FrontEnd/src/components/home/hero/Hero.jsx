@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Heading from "../../common/Heading";
 import "./hero.css";
 import axios from "axios";
+import { getCities } from "../../data/Data";
 
 const Hero = () => {
   const [location, setLocation] = useState("");
@@ -46,16 +47,13 @@ const Hero = () => {
 
   useEffect(() => {
     const fetchLocations = async () => {
-      try {
-        const response = await axios.get("http://localhost:8080/city/");
-        setLocations(response.data);
-      } catch (error) {
-        console.error("Error fetching locations:", error);
-      }
+      const cities = await getCities();
+      setLocations(cities);
     };
 
     fetchLocations();
   }, []);
+
 
   const fetchAreas = async (selectedCity) => {
     try {

@@ -1,32 +1,64 @@
-import React, { useState } from "react";
-import "./propertyManagement.css"; // Import the CSS file for styling
-import { citiesData } from "../data/Data";
-import { areasData } from "../data/Data";
+import React, { useEffect, useState } from "react";
+import "./propertyManagement.css";
+import { getCities, getAreas } from "../data/Data";
+import { useUser } from "../common/UserProvider";
 
 const PropertyManagement = () => {
-  const [flatType, setFlatType] = useState(""); // State for flat type
-  const [preferredTenant, setPreferredTenant] = useState(""); // State for preferred tenant
-  const [area, setArea] = useState(""); // State for area in square foot
-  const [address, setAddress] = useState(""); // State for address
-  const [city, setCity] = useState(""); // State for city
-  const [areaid, setAreaid] = useState(""); // State for area in the selected city
-  const [images, setImages] = useState([]); // State for images
+  const [flatType, setFlatType] = useState("");
+  const [preferredTenant, setPreferredTenant] = useState("");
+  const [area, setArea] = useState("");
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [areaId, setAreaId] = useState("");
+  const [images, setImages] = useState([]);
+  const [citiesData, setCitiesData] = useState([]);
+  const [areasData, setAreasData] = useState([]);
+  const { user } = useUser();
+
+  useEffect(() => {
+    const fetchCities = async () => {
+      try {
+        const cities = await getCities();
+        setCitiesData(cities);
+      } catch (error) {
+        console.error("Error fetching cities:", error);
+      }
+    };
+
+    fetchCities();
+  }, []);
+
+  const handleCityChange = async (selectedCity) => {
+    setCity(selectedCity);
+
+    if (selectedCity) {
+      try {
+        const areas = await getAreas(selectedCity);
+        setAreasData(areas);
+        console.log('area data from line 36 in property.js' + areasData);
+      } catch (error) {
+        console.error("Error fetching areas:", error);
+        // Handle error as needed
+      }
+    } else {
+      setAreasData([]);
+    }
+  };
 
   const handleAddProperty = () => {
-    // Validation: Check if all fields are filled except images
-    if (flatType && preferredTenant && area && address && city && areaid) {
+    if (flatType && preferredTenant && area && address && city && areaId && user?.userId) {
       const propertyData = {
         flatType,
         preferredTenant,
         area,
         address,
         city,
-        areaid,
-        images, // Include images in the property data
+        areaId,
+        images,
+        userId: user.userId,
       };
 
-      // Send the form data to the backend
-      fetch("http://your-backend-api-url/addProperty", {
+      fetch("http://localhost:8080/properties/add", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -35,19 +67,17 @@ const PropertyManagement = () => {
       })
         .then((response) => response.json())
         .then((data) => {
-          // Handle the response from the backend
           console.log("Response from backend:", data);
-          // You can perform additional actions based on the response from the backend
+          // Optionally, you can perform additional actions based on the response
         })
         .catch((error) => {
-          // Handle any errors that occur during the fetch operation
           console.error("Error sending data to the backend:", error);
         });
     } else {
-      // Display error message for mandatory fields
       alert("Please fill in all mandatory fields.");
     }
   };
+
 
   return (
     <div className="property-management">
@@ -64,7 +94,6 @@ const PropertyManagement = () => {
           <option value="_1BHK">1BHK</option>
           <option value="_2BHK">2BHK</option>
           <option value="_3BHK">3BHK</option>
-          {/* Add more options for different flat types */}
         </select>
 
         <label htmlFor="preferredTenant">Preferred Tenant:</label>
@@ -74,10 +103,9 @@ const PropertyManagement = () => {
           onChange={(e) => setPreferredTenant(e.target.value)}
         >
           <option value="">Select Preferred Tenant</option>
-          <option value="Both">Anyone</option>
-          <option value="Family">Family</option>
-          <option value="Bachelor">Bachelor</option>
-          {/* Add more options for different tenant preferences */}
+          <option value="BOTH">Anyone</option>
+          <option value="FAMILY">Family</option>
+          <option value="BACHELOR">Bachelor</option>
         </select>
 
         <label htmlFor="area">Area (in sq. ft.):</label>
@@ -97,34 +125,25 @@ const PropertyManagement = () => {
         />
 
         <label htmlFor="city">City:</label>
-        <select
-          id="city"
-          value={city}
-          onChange={(e) => setCity(e.target.value)}
-        >
+        <select id="city" value={city} onChange={(e) => handleCityChange(e.target.value)}>
           <option value="">Select City</option>
-          {citiesData.map((city) => (
-            <option key={city.id} value={city.name}>
-              {city.name}
+          {citiesData.map((city, index) => (
+            <option key={index} value={city}>
+              {city}
             </option>
           ))}
         </select>
 
-        <label htmlFor="areaid">Area in City:</label>
-        <select
-          id="areaid"
-          value={areaid}
-          onChange={(e) => setAreaid(e.target.value)}
-        >
+        <label htmlFor="areaId">Area in City:</label>
+        <select id="areaId" value={areaId} onChange={(e) => setAreaId(e.target.value)}>
           <option value="">Select Area in City</option>
-          {areasData[city]?.map((area) => (
-            <option key={area.id} value={area.name}>
-              {area.name}
+          {areasData.map((area) => (
+            <option key={area} value={area}>
+              {area}
             </option>
           ))}
         </select>
 
-        {/* Logic to upload and display images */}
         <label htmlFor="images">Upload Images:</label>
         <input
           type="file"
