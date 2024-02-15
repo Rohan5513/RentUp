@@ -37,7 +37,7 @@ public class UserController {
 	}
 
 	@PostMapping(value = "/register",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	public ResponseEntity<?> addUser(@RequestBody UserDTO userDTO,@RequestPart("userProfilePicture") MultipartFile userProfilePicture) throws Exception {
+	public ResponseEntity<?> addUser(@RequestBody UserDTO userDTO,@RequestPart(name = "userProfilePicture",required = false) MultipartFile userProfilePicture) throws Exception {
 
 		UserDTO newUser = userService.addUser(userDTO,userProfilePicture);
 		if (newUser != null) {
@@ -63,7 +63,7 @@ public class UserController {
 	public ResponseEntity<?> updateUserProfile(@PathVariable Integer userId,
 											   @RequestParam("userName") String userName,
 											   @RequestParam("userEmail") String userEmail,
-											   @RequestParam("userProfilePicture") MultipartFile userProfilePicture) throws IOException {
+											   @RequestParam(name = "userProfilePicture",required = false) MultipartFile userProfilePicture) throws IOException {
 		UserDTO userDTO = userService.updateUser(userId, userName,userEmail,userProfilePicture);
 		System.out.println(userDTO);
 		return ResponseEntity.ok(userDTO);

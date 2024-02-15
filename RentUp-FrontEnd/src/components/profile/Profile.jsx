@@ -111,7 +111,7 @@ const Profile = () => {
         <div className="profile-info">
           <p>Email: {user.userEmail}</p>
             <p>Name: {user.userName}</p>
-            <p>Is Admin:{user.isAdmin}</p>
+            {/* <p>Is Admin:{user.isAdmin}</p> */}
           <p>Profile Picture:
           {userProfilePictureRender && (
         <img src={userProfilePictureRender} alt="ProfilePicture" />

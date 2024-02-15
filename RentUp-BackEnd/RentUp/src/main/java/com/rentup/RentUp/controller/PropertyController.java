@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 @RestController
+@CrossOrigin
 @RequestMapping("/properties")
 public class PropertyController {
     @Autowired

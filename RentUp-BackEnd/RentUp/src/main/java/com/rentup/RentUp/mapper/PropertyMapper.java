@@ -40,28 +40,28 @@ public class PropertyMapper {
         return property;
     }
 
-    public static Property mapRequestToEntity(PropertyRequest request) {
+    public  Property mapRequestToEntity(PropertyRequest request) {
         Property property = new Property();
         property.setPropertyId(request.getPropertyId());
         property.setPropertyImages(request.getPropertyImages());
         property.setAddress(request.getAddress());
         property.setCarpet_area(request.getArea());
         property.setStatus(PropertyStatus.valueOf("AVAILABLE"));
-        property.setTenantType(Enum.valueOf(TenantType.class, request.getTenantType()));
-        property.setFlatType(Enum.valueOf(FlatType.class, request.getFlatType()));
+        property.setTenantType(Enum.valueOf(TenantType.class, request.getPreferredTenant().toUpperCase()));
+        property.setFlatType(Enum.valueOf(FlatType.class, request.getFlatType().toUpperCase()));
         return property;
     }
 
-    public static PropertyRequest mapEntityToRequest(Property entity) {
+    public  PropertyRequest mapEntityToRequest(Property entity) {
         PropertyRequest request = new PropertyRequest();
         request.setPropertyId(entity.getPropertyId());
         request.setPropertyImages(entity.getPropertyImages());
         request.setAddress(entity.getAddress());
-        request.setAreaId(entity.getArea().getAreaId());
+        request.setAreaId(entity.getArea().getAreaName());
         request.setUserId(entity.getUser().getUserId());
         request.setStatus(entity.getStatus().toString());
         request.setArea(entity.getCarpet_area());
-        request.setTenantType(entity.getTenantType().name());
+        request.setPreferredTenant(entity.getTenantType().name());
         request.setFlatType(entity.getFlatType().name());
         return request;
     }

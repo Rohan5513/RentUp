@@ -26,6 +26,19 @@
     
 // ]
 
+import  axios   from "axios";
+
+export const getCities = async () => {
+  try {
+    const response = await axios.get("http://localhost:8080/city/"); // Update the API endpoint
+    console.log('from here'+response.data)
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching cities:", error);
+    return [];
+  }
+};
+
 export const getNavData = (user) => {
   const navData = [
       {
@@ -394,25 +407,17 @@ export const teamMembers = [
     // Add details of other team members as needed
   ];
 
-  export const citiesData = [
-    { id: 1, name: "Pune" },
-    { id: 2, name: "Mumbai" },
-    // Add more cities as needed
-  ];
   
-  export const areasData = {
-    "Pune": [
-      { id: 1, name: "Pashan" },
-      { id: 2, name: "Baner" },
-      // Add more areas in City A as needed
-    ],
-    "Mumbai": [
-      { id: 1, name: "churgate" },
-      { id: 2, name: "Andheri" },
-      // Add more areas in City B as needed
-    ],
-    // Add more cities and their respective areas as needed
-  };
+  
+  export const getAreas = async (city) => {
+  try {
+    const response = await axios.get(`http://localhost:8080/area/${city}`); // Update the API endpoint for areas
+    return response.data;
+  } catch (error) {
+    console.error(`Error fetching areas for ${city}:`, error);
+    return [];
+  }
+};
   
 
 
