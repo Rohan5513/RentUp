@@ -33,3 +33,22 @@
 .property-management .form button:hover {
   background-color: #27ae60;
 }
+
+
+#area,
+#address,
+#price {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px;
+  margin-bottom: 10px;
+}
+
+.form > * {
+  margin-bottom: 10px;
+}
+
+.message {
+  margin-top: 10px;
+  color: #333;
+}
