@@ -32,7 +32,7 @@ public class User {
 
     @Lob
     @Column(name = "profile_picture")
-    private byte[] profilePicture;
+    private String profilePicture;
 
     @Column(name = "properties_left")
     private Integer propertiesLeft;

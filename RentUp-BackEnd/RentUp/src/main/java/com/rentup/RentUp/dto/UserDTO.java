@@ -5,12 +5,12 @@ import lombok.Data;
 @Data
 public class UserDTO {
     private Integer userId;
-    private String userEmail;
-    private String userPassword;
-    private String userName;
-    private String userContactNumber;
-    private byte[] userProfilePicture;
+    private String email;
+    private String password;
+    private String name;
+    private String contactNumber;
     private Integer propertiesLeft;
+    private String subscriptionType;
     
 
 }

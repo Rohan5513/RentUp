@@ -418,7 +418,6 @@ export const teamMembers = [
     return [];
   }
 };
-<<<<<<< HEAD
 
 export const getAllProperties = async () => {
   try {
@@ -429,8 +428,6 @@ export const getAllProperties = async () => {
     return [];
   }
 };
-=======
->>>>>>> f456e7f4f54e37ad80266a6f1c26655dc7150db5
   
 
 
