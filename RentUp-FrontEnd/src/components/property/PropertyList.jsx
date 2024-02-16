@@ -1,10 +1,9 @@
-// PropertyList.js
 import React, { useEffect, useState } from "react";
-
-import PropertyCard from "./PropertyCard"; // Adjust the path accordingly
-import "./PropertyList.css"; // Import your CSS file
+import PropertyCard from "./PropertyCard";
+import "./PropertyList.css";
 import { getAllProperties } from "../data/Data";
-import Carousel from "react-multi-carousel";
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
 
 const PropertyList = () => {
   const [properties, setProperties] = useState([]);
@@ -40,13 +39,13 @@ const PropertyList = () => {
   return (
     <div className="property-list-container">
       <h2>Property List</h2>
-      <div className="property-list">
-      {/* <Carousel responsive={responsive} className="myCarousel"> */}
+      <Carousel responsive={responsive} className="myCarousel">
         {properties.map((property) => (
-          <PropertyCard key={property.propertyId} property={property} />
+          <div key={property.propertyId} className="property-card">
+            <PropertyCard property={property} />
+          </div>
         ))}
-        {/* </Carousel> */}
-      </div>
+      </Carousel>
     </div>
   );
 };

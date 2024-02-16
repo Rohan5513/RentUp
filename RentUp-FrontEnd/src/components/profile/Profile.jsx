@@ -6,15 +6,17 @@ import "./Profile.css"; // Import the CSS file
 
 const Profile = () => {
   const { user, setUser } = useUser();
-  console.log(user);
+  let isSubsValid = axios.get(`http://localhost:8080/users/subscription_type/${user.contactNumber}`);
   const [formData, setFormData] = useState({
-    userEmail: user.userEmail,
-    userName: user.userName,
+    userEmail: user.email,
+    userName: user.name,
     userProfilePicture: user.userProfilePicture,
   });
   const [editMode, setEditMode] = useState(false);
 
   const [userProfilePictureRender, setUserProfilePicture] = useState(null);
+  console.log(user.user);
+
 
   useEffect(() => {
     if (user && user.userProfilePicture) {
@@ -112,22 +114,22 @@ const Profile = () => {
         </form>
       ) : (
         <div className="profile-info">
-          <p>Email: {user.userEmail}</p>
-          <p>Name: {user.userName}</p>
+          <p>Email: {user.email}</p>
+          <p>Name: {user.name}</p>
           {/* <p>Is Admin:{user.isAdmin}</p> */}
           <p>Profile Picture:
             {userProfilePictureRender && (
               <img src={userProfilePictureRender} alt="ProfilePicture" />
             )}
           </p>
-          <p>Contact Number: {user.userContactNumber}</p>
+          <p>Contact Number: {user.contactNumber}</p>
           {user.subscriptionType != null ?
             <div>
               <p>Subscription Plan: {user.subscriptionType}</p>
               <p>Subscription End Date: {user.subscriptionEndDate}</p>
             </div>
             : ""}
-          <p>Properties Left: {user.propertiesLeft}</p>
+          <p>Properties Left: {user.propertiesLeft>2000000? 'Unlimited' : user.propertiesLeft}</p>
           <button onClick={() => setEditMode(true)} className="edit-btn">
             Edit
           </button>

@@ -13,7 +13,6 @@ public class UserDTO {
     private String contactNumber;
     private Integer propertiesLeft;
     private String subscriptionType;
-
     private Date subscriptionEndDate;
 
 

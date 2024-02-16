@@ -46,6 +46,5 @@ public class User {
     private Date subscriptionStartDate = null;
 
     @Column(name ="subscription_end_date")
-    private Date subscriptionEndDate = null;
-
+    private Date subscriptionEndDate=null;
 }

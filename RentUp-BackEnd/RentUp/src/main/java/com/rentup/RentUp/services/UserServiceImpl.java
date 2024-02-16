@@ -126,13 +126,38 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public String getSubscriptionType(String mobileNumber) {
 		User user = userRepository.findByContactNumber(mobileNumber);
+		if(!(isSubscriptionLeft(user))){
+			user.setPropertiesLeft(5);
+			user.setSubscriptionStartDate(null);
+			user.setSubscriptionEndDate(null);
+			user.setSubscriptionType(null);
+			userRepository.save(user);
+		}
 		return user.getSubscriptionType();
+	}
+
+
+	public boolean isSubscriptionLeft(User user){
+		Date endDate = user.getSubscriptionEndDate();
+		LocalDate currDate = LocalDate.now();
+		if(currDate.isAfter(endDate.toLocalDate())){
+			return false;
+		}
+		return true;
 	}
 
 	@Override
 	public Boolean updateSubscription(String mobileNumber, String planType) {
 		User userEntity = userRepository.findByContactNumber(mobileNumber);
 		userEntity.setSubscriptionType(planType.toUpperCase());
+		if(planType.equalsIgnoreCase("silver")){
+			userEntity.setPropertiesLeft(15);
+		} else if (planType.equalsIgnoreCase("gold")) {
+			userEntity.setPropertiesLeft(35);
+		}
+		else{
+			userEntity.setPropertiesLeft(Integer.MAX_VALUE);
+		}
 		LocalDate startDate = LocalDate.now();
 		Date sqlStartDate = Date.valueOf(startDate);
 		Date sqlEndDate = Date.valueOf(startDate.plusMonths(1));
