@@ -277,79 +277,79 @@ export const team = [
 ]
 export const price = [
   {
-    plan: "Basic",
-    price: "29",
-    ptext: "per user, per month",
+    plan: "Silver",
+    price: "199",
+    ptext: "per month",
     list: [
       {
         icon: <i class='fa-solid fa-check'></i>,
-        text: "99.5% Uptime Guarantee",
+        text: "Login from 2 Devices",
       },
       {
         icon: <i class='fa-solid fa-check'></i>,
-        text: "120GB CDN Bandwidth",
+        text: "Add Free Experience",
       },
       {
         icon: <i class='fa-solid fa-check'></i>,
-        text: "5GB Cloud Storage",
+        text: "1 month customer support for rented property",
       },
-      { change: "color", icon: <i class='fa-solid fa-x'></i>, text: "Personal Help Support" },
-      { change: "color", icon: <i class='fa-solid fa-x'></i>, text: "Enterprise SLA" },
+      { change: "color", icon: <i class='fa-solid fa-x'></i>, text: "List Unlimited Properties in a month" },
+      { change: "color", icon: <i class='fa-solid fa-x'></i>, text: "Contact Unlimited Brokers" },
     ],
   },
   {
     best: "Best Value",
-    plan: "Standard",
-    price: "49",
-    ptext: "per user, per month",
+    plan: "Gold",
+    price: "299",
+    ptext: "per month",
     list: [
       {
         icon: <i class='fa-solid fa-check'></i>,
-        text: "99.5% Uptime Guarantee",
+        text: "Login from 4 Devices",
       },
       {
         icon: <i class='fa-solid fa-check'></i>,
-        text: "150GB CDN Bandwidth",
+        text: "Add Free Experience",
       },
       {
         icon: <i class='fa-solid fa-check'></i>,
-        text: "10GB Cloud Storage",
+        text: "2 month customer support for rented property",
       },
       {
         icon: <i class='fa-solid fa-check'></i>,
-        text: "Personal Help Support",
+        text: "List Unlimited Properties in a month",
       },
       {
         change: "color",
         icon: <i class='fa-solid fa-x'></i>,
-        text: "Enterprise SLA",
+        text: "Contact Unlimited Brokers",
       },
     ],
   },
   {
     plan: "Platinum",
-    price: "79",
-    ptext: "2 user, per month",
+    price: "499",
+    ptext: "per month",
     list: [
       {
         icon: <i class='fa-solid fa-check'></i>,
-        text: "100% Uptime Guarantee",
+        text: "Login from 8 Devices",
       },
       {
         icon: <i class='fa-solid fa-check'></i>,
-        text: "200GB CDN Bandwidth",
+        text: "Add Free Experience",
       },
       {
         icon: <i class='fa-solid fa-check'></i>,
-        text: "20GB Cloud Storage",
+        text: "List Unlimited Properties in a month",
       },
       {
         icon: <i class='fa-solid fa-check'></i>,
-        text: "Personal Help Support",
+        text: "1 month customer support for rented property",
       },
       {
         icon: <i class='fa-solid fa-check'></i>,
-        text: "Enterprise SLA",
+        text: "Contact Unlimited Brokers",
       },
     ],
   },
@@ -418,6 +418,7 @@ export const teamMembers = [
     return [];
   }
 };
+<<<<<<< HEAD
 
 export const getAllProperties = async () => {
   try {
@@ -428,6 +429,8 @@ export const getAllProperties = async () => {
     return [];
   }
 };
+=======
+>>>>>>> f456e7f4f54e37ad80266a6f1c26655dc7150db5
   
 
 

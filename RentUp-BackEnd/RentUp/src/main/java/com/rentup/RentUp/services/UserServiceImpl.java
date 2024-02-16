@@ -47,10 +47,12 @@ public class UserServiceImpl implements UserService {
 		return customMapper.mapUserToDTO(savedUser);
 	}
 
-	@Override
-	public UserDTO loginUser(String mobileNumber, String password) {
-		System.out.println(passwordEncoder.encodePassword("Pass@123"));
-		User user = userRepository.findByContactNumber(mobileNumber);
+
+    @Override
+    public UserDTO loginUser(String mobileNumber, String password) {
+    	System.out.println(passwordEncoder.encodePassword("Pass@123"));
+        User user = userRepository.findByContactNumber(mobileNumber);
+
 
 		if (user != null && passwordEncoder.verifyPassword(password, user.getPassword())) {
 			return customMapper.mapUserToDTO(user);
@@ -108,10 +110,13 @@ public class UserServiceImpl implements UserService {
 
 	}
 
-	@Override
-	public List<UserDTO> getAllUsers() {
-		List<User> users = userRepository.findAll();
-		List<UserDTO> userDTOList = users.stream().map(user -> customMapper.mapUserToDTO(user)).toList();
-		return userDTOList;
-	}
+
+
+    @Override
+    public List<UserDTO> getAllUsers() {
+        List<User> users = userRepository.findAll();
+        List<UserDTO> userDTOList = users.stream().map(user->customMapper.mapUserToDTO(user)).toList();
+        return userDTOList;
+    }
+
 }
