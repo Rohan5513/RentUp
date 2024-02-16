@@ -11,7 +11,6 @@ import com.rentup.RentUp.services.UserService;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -87,5 +86,16 @@ public class UserController {
 		return create.toString();
 	}
 
+
+	@GetMapping("/subscription_type/{mobileNumber}")
+	public String getSubsricptionType(@PathVariable String mobileNumber){
+		return userService.getSubscriptionType(mobileNumber);
+	}
+
+
+	@PutMapping("/subscription/{mobileNumber}/{planType}")
+	public ResponseEntity<?> updateSubscription(@PathVariable String mobileNumber,@PathVariable String planType){
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(userService.updateSubscription(mobileNumber,planType));
+	}
 
 }

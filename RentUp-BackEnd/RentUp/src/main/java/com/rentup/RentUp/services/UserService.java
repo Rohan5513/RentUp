@@ -15,5 +15,9 @@ public interface UserService {
 	User findById(Integer userId);
 	UserDTO updateUser(Integer userId, String userName, String userEmail, MultipartFile userProfilePicture) throws IOException;
 	List<UserDTO> getAllUsers();
+
+	String getSubscriptionType(String mobileNumber);
+
+	Boolean updateSubscription(String mobileNumber,String planType);
 }
 

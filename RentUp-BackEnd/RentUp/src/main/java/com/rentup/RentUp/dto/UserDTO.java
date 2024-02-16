@@ -2,6 +2,8 @@ package com.rentup.RentUp.dto;
 
 import lombok.Data;
 
+import java.sql.Date;
+
 @Data
 public class UserDTO {
     private Integer userId;
@@ -11,7 +13,8 @@ public class UserDTO {
     private String userContactNumber;
     private byte[] userProfilePicture;
     private Integer propertiesLeft;
-    
+    private String subscriptionType;
+    private Date subscriptionEndDate;
 
 }
 

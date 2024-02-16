@@ -1,11 +1,12 @@
 // Profile.jsx
-import React, { useState , useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useUser } from "../common/UserProvider";
 import axios from "axios";
 import "./Profile.css"; // Import the CSS file
 
 const Profile = () => {
   const { user, setUser } = useUser();
+  console.log(user);
   const [formData, setFormData] = useState({
     userEmail: user.userEmail,
     userName: user.userName,
@@ -18,20 +19,22 @@ const Profile = () => {
   useEffect(() => {
     if (user && user.userProfilePicture) {
       const byteArray = new Uint8Array(user.userProfilePicture); // Assuming user.userProfilePicture is the byte array
-    console.log(user.userProfilePicture);
+      console.log(user.userProfilePicture);
       const base64String = btoa(
         Array.from(byteArray)
           .map((byte) => String.fromCharCode(byte))
           .join("")
       );
       setUserProfilePicture(`data:image/jpeg;base64,${base64String}`);
-      console.log('String is '+base64String);
+      console.log('String is ' + base64String);
     }
-  }, [user,userProfilePictureRender]);
+  }, [user, userProfilePictureRender]);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
+
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,11 +42,11 @@ const Profile = () => {
       const response = await axios.put(
         `http://localhost:8080/users/${user.userId}`,
         formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data", // Set content type to multipart/form-data
-        },
-      }
+        {
+          headers: {
+            "Content-Type": "multipart/form-data", // Set content type to multipart/form-data
+          },
+        }
       );
       setUser(response.data);
       setEditMode(false);
@@ -81,8 +84,8 @@ const Profile = () => {
           <div>
             <label>Profile Picture:</label>
             {userProfilePictureRender && (
-        <img src={userProfilePictureRender} alt="ProfilePicture" />
-      )}
+              <img src={userProfilePictureRender} alt="ProfilePicture" />
+            )}
             <input
               type="file"
               accept="image/*"
@@ -110,14 +113,20 @@ const Profile = () => {
       ) : (
         <div className="profile-info">
           <p>Email: {user.userEmail}</p>
-            <p>Name: {user.userName}</p>
-            {/* <p>Is Admin:{user.isAdmin}</p> */}
+          <p>Name: {user.userName}</p>
+          {/* <p>Is Admin:{user.isAdmin}</p> */}
           <p>Profile Picture:
-          {userProfilePictureRender && (
-        <img src={userProfilePictureRender} alt="ProfilePicture" />
-      )}
-      </p>
+            {userProfilePictureRender && (
+              <img src={userProfilePictureRender} alt="ProfilePicture" />
+            )}
+          </p>
           <p>Contact Number: {user.userContactNumber}</p>
+          {user.subscriptionType != null ?
+            <div>
+              <p>Subscription Plan: {user.subscriptionType}</p>
+              <p>Subscription End Date: {user.subscriptionEndDate}</p>
+            </div>
+            : ""}
           <p>Properties Left: {user.propertiesLeft}</p>
           <button onClick={() => setEditMode(true)} className="edit-btn">
             Edit

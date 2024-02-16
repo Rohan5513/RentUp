@@ -22,6 +22,8 @@ public class CustomMapper {
         userDTO.setUserContactNumber(user.getContactNumber());
         userDTO.setUserProfilePicture(user.getProfilePicture());
         userDTO.setPropertiesLeft(user.getPropertiesLeft());
+        userDTO.setSubscriptionType(user.getSubscriptionType());
+        userDTO.setSubscriptionEndDate(user.getSubscriptionEndDate());
         ;
         return userDTO;
     }
