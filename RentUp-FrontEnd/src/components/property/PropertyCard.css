@@ -1,0 +1,29 @@
+.property-card {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.property-title {
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.property-info {
+    margin: 5px 0;
+}
+
+.property-images {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 15px;
+}
+
+.property-image {
+    max-width: 100px;
+    max-height: 100px;
+    object-fit: cover;
+    border-radius: 4px;
+}

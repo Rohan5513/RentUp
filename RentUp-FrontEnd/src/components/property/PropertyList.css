@@ -1,0 +1,54 @@
+.property-list-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.property-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+/* Optional: Style for individual property cards */
+.property-card {
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+
+    &:hover {
+        transform: scale(1.05);
+    }
+}
+
+.property-title {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.property-info {
+    margin: 5px 0;
+}
+
+.property-images {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 15px;
+}
+
+.property-image {
+    max-width: 100px;
+    max-height: 100px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+/* Media query for responsiveness */
+@media screen and (max-width: 600px) {
+    .property-list {
+        grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+    }
+}

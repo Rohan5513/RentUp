@@ -1,3 +1,4 @@
+import PropertyList from "../property/PropertyList";
 import Awards from "./awards/Awards";
 import Featured from "./featured/Featured";
 import Hero from "./hero/Hero";
@@ -14,6 +15,7 @@ const Home = () => {
     <>
       <Hero />
       <Featured />
+      <PropertyList/>
       <Recent />
       <Awards />
       <Location />

@@ -9,6 +9,7 @@ const Header = () => {
   const { user, setUser } = useUser(); // Get user and setUser function from context
   const [navList, setNavList] = useState(false);
   const history = useHistory(); // Initialize useHistory hook
+  
 
   const navData = getNavData(user); // Get navigation data based on user login state
 
@@ -20,6 +21,7 @@ const Header = () => {
     history.push("/");
   };
 
+  console.log(user!=null);
   return (
     <>
       <header>
@@ -32,20 +34,19 @@ const Header = () => {
               {navData.map((item, index) => (
                 <li key={index}>
                   {item.path === "/logout" ? (
-                    // If logout button, render logout button
-                    <button className="btn1" onClick={handleLogout}>
+                    <Link to={item.path} onClick={handleLogout}>
                       {item.text}
-                    </button>
-                  ) : user && item.path === "/add" ? (
+                    </Link>
+                  ) : user != null ? (
+                    // Render all links when user is not null
                     <Link to={item.path}>{item.text}</Link>
-                  ) : item.path !== "/add" ? (
-                    // If not logout button or add property link, render regular link
+                  ) : item.path !== "/property" ? (
+                    // Render all links except /add when user is null
                     <Link to={item.path}>{item.text}</Link>
-                  ) : (
-                    <p></p>
-                  )}
+                  ) : null}
                 </li>
               ))}
+              
             </ul>
           </div>
           <div className="toggle">

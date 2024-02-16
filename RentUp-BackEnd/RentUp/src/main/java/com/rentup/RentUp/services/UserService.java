@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 public interface UserService {
-	UserDTO addUser(UserDTO userDTO, MultipartFile userProfilePicture);
+	UserDTO addUser(UserDTO userDTO);
 	UserDTO loginUser(String mobileNumber, String password);
 
 	User findById(Integer userId);
