@@ -9,6 +9,8 @@ import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 import lombok.*;
 
+import java.sql.Date;
+
 @Entity
 @Data
 @Table(name = "users")
@@ -37,6 +39,13 @@ public class User {
     @Column(name = "properties_left")
     private Integer propertiesLeft;
 
-    @Column(name ="subscription_type", columnDefinition = "VARCHAR(255) DEFAULT NULL")
+    @Column(name ="subscription_type", columnDefinition = "VARCHAR(10) DEFAULT NULL")
     private String subscriptionType;
+
+    @Column(name ="subscription_start_date")
+    private Date subscriptionStartDate = null;
+
+    @Column(name ="subscription_end_date")
+    private Date subscriptionEndDate = null;
+
 }

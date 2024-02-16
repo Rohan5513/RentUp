@@ -33,6 +33,7 @@ import com.rentup.RentUp.services.ImageHandlingService;
 import com.rentup.RentUp.services.UserService;
 
 
+
 @RestController
 @CrossOrigin
 @RequestMapping("/users") 
@@ -113,5 +114,16 @@ public class UserController {
 		return create.toString();
 	}
 
+
+	@GetMapping("/subscription_type/{mobileNumber}")
+	public String getSubsricptionType(@PathVariable String mobileNumber){
+		return userService.getSubscriptionType(mobileNumber);
+	}
+
+
+	@PutMapping("/subscription/{mobileNumber}/{planType}")
+	public ResponseEntity<?> updateSubscription(@PathVariable String mobileNumber,@PathVariable String planType){
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(userService.updateSubscription(mobileNumber,planType));
+	}
 
 }

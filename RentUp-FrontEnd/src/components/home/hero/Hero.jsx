@@ -12,25 +12,19 @@ const Hero = () => {
   const [propertyType, setPropertyType] = useState("");
   const [priceRange, setPriceRange] = useState("");
 
-  const propertyTypes = ["House", "Apartment", "Condo", "Land"];
+  const propertyTypes = ["1RK","1BHK","2BHK","3BHK"];
   const prices = [
     {
-      value: "100000 - 130000",
+      value: "<₹10000",
     },
     {
-      value: "130000 - 160000",
+      value: "<₹15000",
     },
     {
-      value: "160000 - 190000",
+      value: "<₹20000",
     },
     {
-      value: "190000 - 220000",
-    },
-    {
-      value: "10000 - 30000",
-    },
-    {
-      value: "30000 - 40000",
+      value: "<₹25000",
     },
   ];
 
@@ -106,6 +100,8 @@ const Hero = () => {
                 value={propertyType}
                 onChange={(e) => handlePropertyTypeSelect(e.target.value)}
               >
+              <option>Select Property Type
+                  </option>
                 {propertyTypes.map((property, index) => (
                   <option key={index} value={property}>
                     {property}
@@ -120,6 +116,8 @@ const Hero = () => {
                 value={priceRange}
                 onChange={(e) => handlePriceRangeSelect(e.target.value)}
               >
+              <option>Select Price Range
+                  </option>
                 {prices.map((price, index) => (
                   <option key={index} value={price.value}>
                     {price.value}

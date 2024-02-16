@@ -2,6 +2,7 @@ import React from "react";
 import { price } from "../../data/Data";
 import { useUser } from "../../common/UserProvider"; 
 import { useHistory } from "react-router-dom";
+import axios from "axios";
 
 const PriceCard = () => {
   const user = useUser();
@@ -22,7 +23,7 @@ const PriceCard = () => {
     }
   };
 
-  const handlePayment = async (price) => {
+  const handlePayment = async (price,plan) => {
     if(user.user == null) {
         history.push("/login");
     }
@@ -38,6 +39,14 @@ const PriceCard = () => {
           order_id: order,
           handler: function (response) {
             rzp.close();
+
+            try{
+              const response =  axios.put(`http://localhost:8080/users/subscription/${user.user.userContactNumber}/${plan}`)
+             
+            }
+            catch(error){
+              console.log(error);
+            }
           },
           prefill: {
             name: "",
@@ -47,7 +56,6 @@ const PriceCard = () => {
         };
         const rzp = new window.Razorpay(options);
         rzp.open();
-        console.log(user);
       } catch (error) {
         console.error("Error handling payment:", error);
       }
@@ -86,7 +94,7 @@ const PriceCard = () => {
             </ul>
             <button
               id="payment_field"
-              onClick={() => handlePayment(item.price)}
+              onClick={() => handlePayment(item.price,item.plan)}
               className='btn5'
               style={{
                 background: item.plan === "Standard" ? "#27ae60" : "#fff",
@@ -105,33 +113,3 @@ const PriceCard = () => {
 export default PriceCard;
 
 
-
-
-
-
-
-// const PriceCard = () => {
-//   const navigate = useNavigate();
-//   const user = useUser();
-//   const createOrder = async (price) => {
-//     try {
-//       const response = await fetch('http://localhost:8080/users/create_order', {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json'
-//       },
-//       body: JSON.stringify({ price: price })
-//     });
-//       const data = await response.json();
-//       return data.id;
-//     } catch (error) {
-//       console.error("Error creating order:", error);
-//     }
-//   };
-
-//   const handlePayment = async (price) => {
-//     if(user.user == null) {
-//       navigate("/login");
-//     }
-    
-//   };

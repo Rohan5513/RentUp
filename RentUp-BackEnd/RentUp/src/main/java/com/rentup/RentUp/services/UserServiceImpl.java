@@ -1,6 +1,8 @@
 package com.rentup.RentUp.services;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -120,5 +122,24 @@ public class UserServiceImpl implements UserService {
        // return userDTOList;
         return null;
     }
+
+	@Override
+	public String getSubscriptionType(String mobileNumber) {
+		User user = userRepository.findByContactNumber(mobileNumber);
+		return user.getSubscriptionType();
+	}
+
+	@Override
+	public Boolean updateSubscription(String mobileNumber, String planType) {
+		User userEntity = userRepository.findByContactNumber(mobileNumber);
+		userEntity.setSubscriptionType(planType.toUpperCase());
+		LocalDate startDate = LocalDate.now();
+		Date sqlStartDate = Date.valueOf(startDate);
+		Date sqlEndDate = Date.valueOf(startDate.plusMonths(1));
+		userEntity.setSubscriptionStartDate(sqlStartDate);
+		userEntity.setSubscriptionEndDate(sqlEndDate);
+		userRepository.save(userEntity);
+		return true;
+	}
 
 }
