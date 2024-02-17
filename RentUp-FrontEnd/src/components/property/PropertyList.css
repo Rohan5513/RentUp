@@ -33,8 +33,8 @@
     max-height: 100px;
     object-fit: cover;
     border-radius: 4px;
-<<<<<<< HEAD
-}
+  }
+
 
 /* Media query for responsiveness */
 @media screen and (max-width: 600px) {
@@ -42,8 +42,8 @@
         grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
     }
 }
-=======
-  }
+
+  
   
   /* Additional styles for carousel */
   .myCarousel .react-multi-carousel-list {
@@ -51,4 +51,3 @@
     flex-wrap: nowrap;
   }
   
->>>>>>> 1d00373fe5631f1cc1ec5c39883ce33be72db510
