@@ -5,7 +5,7 @@ import "./Login.css"; // Import your CSS file
 import { useUser } from "../common/UserProvider"; // Import useUser hook from context
 
 const Login = () => {
-  const { setUser } = useUser(); // Get setUser function from context
+  const { setUser } = useUser(); 
   const [formData, setFormData] = useState({
     mobileNumber: "",
     password: "",
@@ -48,6 +48,7 @@ const Login = () => {
         console.log("Form submitted:", response.data);
         setUser(response.data); // Set user state after successful login
         setShowButtons(false); // Hide login and signup buttons
+        
         // Redirect user to home page after successful login
         history.push("/");
       } catch (error) {

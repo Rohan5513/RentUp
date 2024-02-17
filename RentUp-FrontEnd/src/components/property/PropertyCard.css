@@ -1,29 +1,44 @@
+.property-card-container {
+  position: relative;
+}
+
+.modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+/* Close button */
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  z-index: 999;
+}
+
+
 .property-card {
-    border: 1px solid #ddd;
-    padding: 15px;
-    margin: 15px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd;
+  padding: 15px;
+  margin: 15px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: filter 0.3s ease; /* Add transition for blur effect */
 }
 
-.property-title {
-    font-size: 1.5rem;
-    color: #333;
-}
-
-.property-info {
-    margin: 5px 0;
-}
-
-.property-images {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 15px;
-}
-
-.property-image {
-    max-width: 100px;
-    max-height: 100px;
-    object-fit: cover;
-    border-radius: 4px;
+.property-card.blurred {
+  filter: blur(5px); /* Apply blur effect */
 }

@@ -6,6 +6,11 @@ import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
 
 import java.io.IOException;
 
+import com.rentup.RentUp.dto.UserDTO;
+import com.rentup.RentUp.request.UserLoginRequest;
+import com.rentup.RentUp.request.UserSignUpRequest;
+import com.rentup.RentUp.services.ImageHandlingService;
+import com.rentup.RentUp.services.UserService;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,11 +31,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.razorpay.Order;
 import com.razorpay.RazorpayClient;
 import com.razorpay.RazorpayException;
-import com.rentup.RentUp.dto.UserDTO;
-import com.rentup.RentUp.request.UserLoginRequest;
-import com.rentup.RentUp.request.UserSignUpRequest;
-import com.rentup.RentUp.services.ImageHandlingService;
-import com.rentup.RentUp.services.UserService;
 
 
 
@@ -129,9 +129,11 @@ public class UserController {
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(userService.updateSubscription(mobileNumber,planType));
 	}
 
-	@PutMapping("/{mobileNumber}/{newPass}")
-	public ResponseEntity<?> changePassWord(@PathVariable String mobileNumber,@PathVariable String newPass){
-		return ResponseEntity.status(HttpStatus.OK).body(userService.changePassword(mobileNumber,newPass));
+	@GetMapping("/{mobileNumber}/properties")
+	public ResponseEntity<?> getUsersPropertiesLeft(@PathVariable String mobileNumber){
+		System.out.println(mobileNumber);
+		return null;
 	}
+
 
 }
