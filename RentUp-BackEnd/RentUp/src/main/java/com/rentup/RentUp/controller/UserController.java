@@ -5,7 +5,7 @@ import java.io.IOException;
 import com.rentup.RentUp.dto.UserDTO;
 import com.rentup.RentUp.request.UserLoginRequest;
 import com.rentup.RentUp.request.UserSignUpRequest;
-import com.rentup.RentUp.services.ImageHandlingService;
+
 import com.rentup.RentUp.services.UserService;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.razorpay.Order;
 import com.razorpay.RazorpayClient;
 import com.razorpay.RazorpayException;
-import com.rentup.RentUp.dto.UserDTO;
-import com.rentup.RentUp.request.UserLoginRequest;
-import com.rentup.RentUp.request.UserSignUpRequest;
-import com.rentup.RentUp.services.UserService;
+
 
 
 
@@ -74,6 +71,7 @@ public class UserController {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		}
 	}
+
 
 	@GetMapping("/{mobileNumber}")
 	public ResponseEntity<?> getUserByMobileNumber(@PathVariable String mobileNumber){
