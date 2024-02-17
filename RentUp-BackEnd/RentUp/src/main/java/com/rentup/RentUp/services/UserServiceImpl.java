@@ -24,39 +24,28 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private ModelMapper mapper;
-	
-	@Autowired
-	private ImageHandlingService imageService;
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
 	@Override
-	public UserDTO addUser(UserSignUpRequest request , MultipartFile image) throws IOException, Exception {
-		
+	public UserDTO addUser(UserSignUpRequest request) {
+
 		User user = mapper.map(request, User.class);
-		System.out.println(user.getPassword());
-		
+
 		user.setPassword(passwordEncoder.encodePassword(user.getPassword()));
-		
-		
-		
-		user.setPassword(passwordEncoder.encodePassword(user.getPassword()));
-		imageService.uploadImage(user, image);
+
 		user.setPropertiesLeft(5);
-		user.setSubscriptionType("GOLD");
 		User savedUser = userRepository.save(user);
-		
+
 		return mapper.map(savedUser, UserDTO.class);
 	}
 
-
-    @Override
-    public UserDTO loginUser(String mobileNumber, String password) throws IOException, Exception {
-    	System.out.println(passwordEncoder.encodePassword("Pass@123"));
-        User user = userRepository.findByContactNumber(mobileNumber);
-
-
+	@Override
+	public UserDTO loginUser(String mobileNumber, String password) throws IOException, Exception {
+		System.out.println(passwordEncoder.encodePassword("Pass@123"));
+		User user = userRepository.findByContactNumber(mobileNumber);
+		
 		if (user != null && passwordEncoder.verifyPassword(password, user.getPassword())) {
 			return mapper.map(user, UserDTO.class);
 		}
@@ -94,7 +83,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserDTO updateUser(Integer userId, String userName, String userEmail, MultipartFile userProfilePicture) throws IOException, Exception {
+	public UserDTO updateUser(Integer userId, String userName, String userEmail, MultipartFile userProfilePicture)
+			throws IOException, Exception {
 		User user = userRepository.findById(userId).orElseThrow();
 
 		user.setEmail(userEmail);
@@ -108,25 +98,24 @@ public class UserServiceImpl implements UserService {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
-		//user.setProfilePicture(userProfilePictureBytes);
-		return mapper.map(userRepository.save(user),UserDTO.class);
+		// user.setProfilePicture(userProfilePictureBytes);
+		return mapper.map(userRepository.save(user), UserDTO.class);
 
 	}
 
-
-
-    @Override
-    public List<UserDTO> getAllUsers() {
-        List<User> users = userRepository.findAll();
-        //List<UserDTO> userDTOList = users.stream().map(user->customMapper.mapUserToDTO(user)).toList();
-       // return userDTOList;
-        return null;
-    }
+	@Override
+	public List<UserDTO> getAllUsers() {
+		List<User> users = userRepository.findAll();
+		// List<UserDTO> userDTOList =
+		// users.stream().map(user->customMapper.mapUserToDTO(user)).toList();
+		// return userDTOList;
+		return null;
+	}
 
 	@Override
 	public String getSubscriptionType(String mobileNumber) {
 		User user = userRepository.findByContactNumber(mobileNumber);
-		if(!(isSubscriptionLeft(user))){
+		if (!(isSubscriptionLeft(user))) {
 			user.setPropertiesLeft(5);
 			user.setSubscriptionStartDate(null);
 			user.setSubscriptionEndDate(null);
@@ -136,11 +125,10 @@ public class UserServiceImpl implements UserService {
 		return user.getSubscriptionType();
 	}
 
-
-	public boolean isSubscriptionLeft(User user){
+	public boolean isSubscriptionLeft(User user) {
 		Date endDate = user.getSubscriptionEndDate();
 		LocalDate currDate = LocalDate.now();
-		if(currDate.isAfter(endDate.toLocalDate())){
+		if (currDate.isAfter(endDate.toLocalDate())) {
 			return false;
 		}
 		return true;
@@ -150,12 +138,11 @@ public class UserServiceImpl implements UserService {
 	public Boolean updateSubscription(String mobileNumber, String planType) {
 		User userEntity = userRepository.findByContactNumber(mobileNumber);
 		userEntity.setSubscriptionType(planType.toUpperCase());
-		if(planType.equalsIgnoreCase("silver")){
+		if (planType.equalsIgnoreCase("silver")) {
 			userEntity.setPropertiesLeft(15);
 		} else if (planType.equalsIgnoreCase("gold")) {
 			userEntity.setPropertiesLeft(35);
-		}
-		else{
+		} else {
 			userEntity.setPropertiesLeft(Integer.MAX_VALUE);
 		}
 		LocalDate startDate = LocalDate.now();

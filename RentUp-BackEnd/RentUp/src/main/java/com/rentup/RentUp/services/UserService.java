@@ -11,7 +11,7 @@ import com.rentup.RentUp.request.UserSignUpRequest;
 
 
 public interface UserService {
-	UserDTO addUser(UserSignUpRequest request , MultipartFile image) throws IOException, Exception;
+	UserDTO addUser(UserSignUpRequest request ) ;
 	UserDTO loginUser(String mobileNumber, String password) throws IOException, Exception;
 
 	User findById(Integer userId);
