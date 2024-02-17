@@ -45,4 +45,6 @@ public class Property {
     @Column(name = "flat_type")
     @Enumerated(EnumType.STRING)
     private FlatType flatType;
+    
+    private int price ;
 }

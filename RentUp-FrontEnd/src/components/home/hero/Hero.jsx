@@ -3,6 +3,9 @@ import Heading from "../../common/Heading";
 import "./hero.css";
 import axios from "axios";
 import { getCities } from "../../data/Data";
+import { getAllProperties } from "../../data/Data";
+import PropertyList from "../../property/PropertyList";
+import PropertyCard from "../../property/PropertyCard";
 
 const Hero = () => {
   const [location, setLocation] = useState("");
@@ -11,8 +14,9 @@ const Hero = () => {
   const [city, setCity] = useState("");
   const [propertyType, setPropertyType] = useState("");
   const [priceRange, setPriceRange] = useState("");
+  const [properties, setProperties] = useState([]);
 
-  const propertyTypes = ["1RK","1BHK","2BHK","3BHK"];
+  const propertyTypes = ["1RK", "1BHK", "2BHK", "3BHK"];
   const prices = [
     {
       value: "<₹10000",
@@ -39,6 +43,90 @@ const Hero = () => {
   const handlePriceRangeSelect = (selectedRange) =>
     setPriceRange(selectedRange);
 
+  // const handleSearch = async () => {
+  //   try {
+  //     const allProperties = await getAllProperties();
+  //     console.log(allProperties);
+  //     console.log(propertyType);
+  //     console.log(priceRange);
+
+  //     console.log(propertyType)
+
+  //     const filteredProperties = allProperties.filter((property) => {
+  //       if (priceRange > 0) {
+  //         return (
+  //           property.areaId.city.cityName === city &&
+  //           property.areaId.areaName === areas[0] &&
+  //           property.price <= priceRange && property.flatType === "_"+propertyType
+  //         );
+  //       } else {
+  //         return (
+  //           property.areaId.city.cityName === city &&
+  //           property.areaId.areaName === areas[0]
+  //         );
+  //       }
+  //     });
+
+  //     setProperties(filteredProperties);
+  //     console.log(filteredProperties);
+  //   } catch (error) {
+  //     console.error("Error fetching properties:", error);
+  //   }
+  // };
+
+  ///AAAA
+  const handleSearch = async () => {
+    try {
+      const allProperties = await getAllProperties();
+
+      const filteredProperties = allProperties.filter((property) => {
+        // if (!(property.status === "AVAILABLE")) {
+          // Filter by city
+          const cityMatch = !city || property.areaId.city.cityName === city && property.status === "AVAILABLE";
+
+          // Filter by area
+          const areaMatch =
+            areas.length === 0 || areas.includes(property.areaId.areaName) && property.status === "AVAILABLE";
+
+          // Combine city and area
+          const cityAreaMatch = cityMatch && areaMatch && property.status === "AVAILABLE";
+
+          // Filter by property type
+          const propertyTypeMatch =
+            !propertyType || property.flatType === "_" + propertyType && property.status === "AVAILABLE";
+
+          // Filter by price range
+          const priceMatch = !priceRange || getPriceRangeMatch(property.price) && property.status === "AVAILABLE";
+
+          // Combine city, area, and property type
+          const cityAreaPropertyTypeMatch = cityAreaMatch && propertyTypeMatch && property.status === "AVAILABLE";
+
+          // Combine city, area, and price range
+          const cityAreaPriceMatch = cityAreaMatch && priceMatch && property.status === "AVAILABLE";
+
+          // Return properties that match either combination
+          return cityAreaPropertyTypeMatch || cityAreaPriceMatch;
+        // }
+      });
+
+      setProperties(filteredProperties);
+    } catch (error) {
+      console.error("Error fetching properties:", error);
+    }
+  };
+
+  const getPriceRangeMatch = (propertyPrice) => {
+    if (!priceRange) return true;
+
+    const price = parseInt(priceRange.replace(/<|₹/g, ""), 10);
+
+    if (priceRange.startsWith("<")) {
+      return propertyPrice < price;
+    } else {
+      return propertyPrice <= price;
+    }
+  };
+
   useEffect(() => {
     const fetchLocations = async () => {
       const cities = await getCities();
@@ -47,7 +135,6 @@ const Hero = () => {
 
     fetchLocations();
   }, []);
-
 
   const fetchAreas = async (selectedCity) => {
     try {
@@ -73,8 +160,7 @@ const Hero = () => {
             <div className="box">
               <span>City</span>
               <select value={city} onChange={handleCityChange}>
-              <option>Select City
-                  </option>
+                <option>Select City</option>
                 {locations.map((city, index) => (
                   <option key={index} value={city}>
                     {city}
@@ -85,8 +171,7 @@ const Hero = () => {
             <div className="box">
               <span>Area</span>
               <select value={areas} onChange={handleAreaChange}>
-              <option>Select Area
-                  </option>
+                <option>Select Area</option>
                 {areas.map((area, index) => (
                   <option key={index} value={area}>
                     {area}
@@ -100,8 +185,7 @@ const Hero = () => {
                 value={propertyType}
                 onChange={(e) => handlePropertyTypeSelect(e.target.value)}
               >
-              <option>Select Property Type
-                  </option>
+                <option>Select Property Type</option>
                 {propertyTypes.map((property, index) => (
                   <option key={index} value={property}>
                     {property}
@@ -116,8 +200,7 @@ const Hero = () => {
                 value={priceRange}
                 onChange={(e) => handlePriceRangeSelect(e.target.value)}
               >
-              <option>Select Price Range
-                  </option>
+                <option value={100000}>Select Price Range</option>
                 {prices.map((price, index) => (
                   <option key={index} value={price.value}>
                     {price.value}
@@ -125,12 +208,13 @@ const Hero = () => {
                 ))}
               </select>
             </div>
-            <button className="btn1">
+            <button className="btn1" type="button" onClick={handleSearch}>
               <i className="fa fa-search"></i>
             </button>
           </form>
         </div>
       </section>
+      <PropertyList properties={properties} />
     </>
   );
 };
