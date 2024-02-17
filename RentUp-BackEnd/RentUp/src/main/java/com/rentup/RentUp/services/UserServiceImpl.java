@@ -5,14 +5,15 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.rentup.RentUp.dto.UserDTO;
 import com.rentup.RentUp.entities.User;
-import com.rentup.RentUp.mapper.CustomMapper;
 import com.rentup.RentUp.repository.UserRepository;
+import com.rentup.RentUp.request.UserSignUpRequest;
 import com.rentup.RentUp.security.PasswordEncoder;
 
 @Service
@@ -22,42 +23,42 @@ public class UserServiceImpl implements UserService {
 	private UserRepository userRepository;
 
 	@Autowired
-	private CustomMapper customMapper;
+	private ModelMapper mapper;
+	
+	@Autowired
+	private ImageHandlingService imageService;
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
 	@Override
-	public UserDTO addUser(UserDTO userDTO) {
-		User user = customMapper.mapDTOToUser(userDTO);
-		byte[] imageData = null;
-//		if (userProfilePicture != null && !userProfilePicture.isEmpty()) {
-//			try {
-//				// Convert the MultipartFile to byte[]
-//				imageData = userProfilePicture.getBytes();
-//
-//				// Set the image data in the User entity
-//			} catch (IOException e) {
-//				// Handle processing errors
-//				e.printStackTrace();
-//			}
-//		}
-		user.setProfilePicture(imageData);
-
+	public UserDTO addUser(UserSignUpRequest request , MultipartFile image) throws IOException, Exception {
+		
+		User user = mapper.map(request, User.class);
+		System.out.println(user.getPassword());
+		
 		user.setPassword(passwordEncoder.encodePassword(user.getPassword()));
+		
+		
+		
+		user.setPassword(passwordEncoder.encodePassword(user.getPassword()));
+		imageService.uploadImage(user, image);
+		user.setPropertiesLeft(5);
+		user.setSubscriptionType("GOLD");
 		User savedUser = userRepository.save(user);
-		return customMapper.mapUserToDTO(savedUser);
+		
+		return mapper.map(savedUser, UserDTO.class);
 	}
 
 
     @Override
-    public UserDTO loginUser(String mobileNumber, String password) {
+    public UserDTO loginUser(String mobileNumber, String password) throws IOException, Exception {
     	System.out.println(passwordEncoder.encodePassword("Pass@123"));
         User user = userRepository.findByContactNumber(mobileNumber);
 
 
 		if (user != null && passwordEncoder.verifyPassword(password, user.getPassword())) {
-			return customMapper.mapUserToDTO(user);
+			return mapper.map(user, UserDTO.class);
 		}
 		return null; // Login failed
 	}
@@ -93,7 +94,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserDTO updateUser(Integer userId, String userName, String userEmail, MultipartFile userProfilePicture) {
+	public UserDTO updateUser(Integer userId, String userName, String userEmail, MultipartFile userProfilePicture) throws IOException, Exception {
 		User user = userRepository.findById(userId).orElseThrow();
 
 		user.setEmail(userEmail);
@@ -107,8 +108,8 @@ public class UserServiceImpl implements UserService {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
-		user.setProfilePicture(userProfilePictureBytes);
-		return customMapper.mapUserToDTO(userRepository.save(user));
+		//user.setProfilePicture(userProfilePictureBytes);
+		return mapper.map(userRepository.save(user),UserDTO.class);
 
 	}
 
@@ -117,20 +118,46 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserDTO> getAllUsers() {
         List<User> users = userRepository.findAll();
-        List<UserDTO> userDTOList = users.stream().map(user->customMapper.mapUserToDTO(user)).toList();
-        return userDTOList;
+        //List<UserDTO> userDTOList = users.stream().map(user->customMapper.mapUserToDTO(user)).toList();
+       // return userDTOList;
+        return null;
     }
 
 	@Override
 	public String getSubscriptionType(String mobileNumber) {
 		User user = userRepository.findByContactNumber(mobileNumber);
+		if(!(isSubscriptionLeft(user))){
+			user.setPropertiesLeft(5);
+			user.setSubscriptionStartDate(null);
+			user.setSubscriptionEndDate(null);
+			user.setSubscriptionType(null);
+			userRepository.save(user);
+		}
 		return user.getSubscriptionType();
+	}
+
+
+	public boolean isSubscriptionLeft(User user){
+		Date endDate = user.getSubscriptionEndDate();
+		LocalDate currDate = LocalDate.now();
+		if(currDate.isAfter(endDate.toLocalDate())){
+			return false;
+		}
+		return true;
 	}
 
 	@Override
 	public Boolean updateSubscription(String mobileNumber, String planType) {
 		User userEntity = userRepository.findByContactNumber(mobileNumber);
 		userEntity.setSubscriptionType(planType.toUpperCase());
+		if(planType.equalsIgnoreCase("silver")){
+			userEntity.setPropertiesLeft(15);
+		} else if (planType.equalsIgnoreCase("gold")) {
+			userEntity.setPropertiesLeft(35);
+		}
+		else{
+			userEntity.setPropertiesLeft(Integer.MAX_VALUE);
+		}
 		LocalDate startDate = LocalDate.now();
 		Date sqlStartDate = Date.valueOf(startDate);
 		Date sqlEndDate = Date.valueOf(startDate.plusMonths(1));

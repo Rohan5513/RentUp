@@ -41,8 +41,8 @@ const PriceCard = () => {
             rzp.close();
 
             try{
-              const response =  axios.put(`http://localhost:8080/users/subscription/${user.user.userContactNumber}/${plan}`)
-             
+              const response =  axios.put(`http://localhost:8080/users/subscription/${user.user.contactNumber}/${plan}`)
+              // console.log(`http://localhost:8080/users/subscription/${user.user.contactNumber}/${plan}`);
             }
             catch(error){
               console.log(error);
@@ -94,7 +94,9 @@ const PriceCard = () => {
             </ul>
             <button
               id="payment_field"
+
               onClick={() => handlePayment(item.price,item.plan)}
+
               className='btn5'
               style={{
                 background: item.plan === "Standard" ? "#27ae60" : "#fff",
@@ -111,5 +113,6 @@ const PriceCard = () => {
 };
 
 export default PriceCard;
+
 
 

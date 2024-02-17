@@ -114,18 +114,18 @@ INSERT INTO properties (property_images, address, area_id, user_id, status, tena
 (NULL, 'Sample Address 12', 12, 12, 'AVAILABLE', 'FAMILY', '_2BHK');
 
 -- Updated Users Table with New Passwords
-INSERT INTO users (email, password, name, contact_number, profile_picture, properties_left) VALUES
-('john.doe@example.com', 'f91e15dbec69fc40f81f0876e7009648', 'John Doe', '+91 1234567890', NULL, 8),
-('sara.smith@example.com', 'f91e15dbec69fc40f81f0876e7009648', 'Sara Smith', '+91 9876543210', NULL, 3),
-('mike.jones@example.com', 'f91e15dbec69fc40f81f0876e7009648', 'Mike Jones', '+91 7777777777', NULL, NULL),
-('emma.johnson@example.com', 'f91e15dbec69fc40f81f0876e7009648', 'Emma Johnson', '+91 9999999999', NULL, NULL),
-('alex.wilson@example.com', 'f91e15dbec69fc40f81f0876e7009648', 'Alex Wilson', '+91 6666666666', NULL, NULL),
-('grace.miller@example.com', 'f91e15dbec69fc40f81f0876e7009648', 'Grace Miller', '+91 5555555555', NULL, NULL),
-('neha.verma@example.com', 'f91e15dbec69fc40f81f0876e7009648', 'Neha Verma', '+91 8888888888', NULL, 7),
-('vikram.singh@example.com', 'f91e15dbec69fc40f81f0876e7009648', 'Vikram Singh', '+91 7777777777', NULL, 2),
-('sonali.rai@example.com', 'f91e15dbec69fc40f81f0876e7009648', 'Sonali Rai', '+91 9999999999', NULL, NULL),
-('amit.kumar@example.com', 'f91e15dbec69fc40f81f0876e7009648', 'Amit Kumar', '+91 6666666666', NULL, NULL),
-('tanvi.sharma@example.com', 'f91e15dbec69fc40f81f0876e7009648', 'Tanvi Sharma', '+91 5555555555', NULL, NULL),
-('rahul.verma@example.com', 'f91e15dbec69fc40f81f0876e7009648', 'Rahul Verma', '+91 4444444444', NULL, NULL);
+INSERT INTO users (email, password, name, contact_number, profile_picture, properties_left,subscription_end_date,subscription_start_date,subscription_type) VALUES
+('john.doe@example.com', 'f91e15dbec69fc40f81f0876e7009648', 'John Doe', '+91 1234567890', NULL, 5,NULL,NULL,NULL),
+('sara.smith@example.com', 'f91e15dbec69fc40f81f0876e7009648', 'Sara Smith', '+91 9876543210', NULL, 5,NULL,NULL,NULL),
+('mike.jones@example.com', 'f91e15dbec69fc40f81f0876e7009648', 'Mike Jones', '+91 7777777777', NULL, 5,NULL,NULL,NULL),
+('emma.johnson@example.com', 'f91e15dbec69fc40f81f0876e7009648', 'Emma Johnson', '+91 9999999999', NULL, 5,NULL,NULL,NULL),
+('alex.wilson@example.com', 'f91e15dbec69fc40f81f0876e7009648', 'Alex Wilson', '+91 6666666666', NULL, 5,NULL,NULL,NULL),
+('grace.miller@example.com', 'f91e15dbec69fc40f81f0876e7009648', 'Grace Miller', '+91 5555555555', NULL, 5,NULL,NULL,NULL),
+('neha.verma@example.com', 'f91e15dbec69fc40f81f0876e7009648', 'Neha Verma', '+91 8888888888', NULL, 5,NULL,NULL,NULL),
+('vikram.singh@example.com', 'f91e15dbec69fc40f81f0876e7009648', 'Vikram Singh', '+91 7777777777', NULL, 5,NULL,NULL,NULL),
+('sonali.rai@example.com', 'f91e15dbec69fc40f81f0876e7009648', 'Sonali Rai', '+91 9999999999', NULL, 5,NULL,NULL,NULL),
+('amit.kumar@example.com', 'f91e15dbec69fc40f81f0876e7009648', 'Amit Kumar', '+91 6666666666', NULL, 5,NULL,NULL,NULL),
+('tanvi.sharma@example.com', 'f91e15dbec69fc40f81f0876e7009648', 'Tanvi Sharma', '+91 5555555555', NULL, 5,NULL,NULL,NULL),
+('rahul.verma@example.com', 'f91e15dbec69fc40f81f0876e7009648', 'Rahul Verma', '+91 4444444444', NULL, 5,NULL,NULL,NULL);
 
 

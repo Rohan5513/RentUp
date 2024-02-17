@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // // PropertyList.js
 // import React, { useEffect, useState } from "react";
 
@@ -114,6 +115,14 @@ import PropertyCard from "./PropertyCard"; // Adjust the path accordingly
 import "./PropertyList.css"; // Import your CSS file
 import Carousel from "react-multi-carousel";
 import { getAllProperties } from "../data/Data";
+=======
+import React, { useEffect, useState } from "react";
+import PropertyCard from "./PropertyCard";
+import "./PropertyList.css";
+import { getAllProperties } from "../data/Data";
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
+>>>>>>> 1d00373fe5631f1cc1ec5c39883ce33be72db510
 
 const PropertyList = ({ properties: initialProperties }) => {
   const [properties, setProperties] = useState([]);
@@ -150,6 +159,7 @@ const PropertyList = ({ properties: initialProperties }) => {
   return (
     <div className="property-list-container">
       <h2>Property List</h2>
+<<<<<<< HEAD
       <div className="property-list">
         {properties && properties.length > 0 ? (
           <Carousel responsive={responsive} className="myCarousel">
@@ -161,6 +171,15 @@ const PropertyList = ({ properties: initialProperties }) => {
           <p>No properties found.</p>
         )}
       </div>
+=======
+      <Carousel responsive={responsive} className="myCarousel">
+        {properties.map((property) => (
+          <div key={property.propertyId} className="property-card">
+            <PropertyCard property={property} />
+          </div>
+        ))}
+      </Carousel>
+>>>>>>> 1d00373fe5631f1cc1ec5c39883ce33be72db510
     </div>
   );
 };
