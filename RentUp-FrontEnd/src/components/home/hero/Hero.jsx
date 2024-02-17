@@ -5,7 +5,6 @@ import axios from "axios";
 import { getCities } from "../../data/Data";
 import { getAllProperties } from "../../data/Data";
 import PropertyList from "../../property/PropertyList";
-import PropertyCard from "../../property/PropertyCard";
 
 const Hero = () => {
   const [location, setLocation] = useState("");
@@ -15,6 +14,22 @@ const Hero = () => {
   const [propertyType, setPropertyType] = useState("");
   const [priceRange, setPriceRange] = useState("");
   const [properties, setProperties] = useState([]);
+
+  useEffect(() => {
+    // Fetch properties only when properties state is null or empty
+    if (!properties || properties.length === 0) {
+      const fetchProperties = async () => {
+        try {
+          const propertiesData = await getAllProperties();
+          setProperties(propertiesData);
+        } catch (error) {
+          console.error("Error fetching properties:", error);
+        }
+      };
+
+      fetchProperties();
+    }
+  }, [properties]);
 
   const propertyTypes = ["1RK", "1BHK", "2BHK", "3BHK"];
   const prices = [
@@ -43,69 +58,50 @@ const Hero = () => {
   const handlePriceRangeSelect = (selectedRange) =>
     setPriceRange(selectedRange);
 
-  // const handleSearch = async () => {
-  //   try {
-  //     const allProperties = await getAllProperties();
-  //     console.log(allProperties);
-  //     console.log(propertyType);
-  //     console.log(priceRange);
-
-  //     console.log(propertyType)
-
-  //     const filteredProperties = allProperties.filter((property) => {
-  //       if (priceRange > 0) {
-  //         return (
-  //           property.areaId.city.cityName === city &&
-  //           property.areaId.areaName === areas[0] &&
-  //           property.price <= priceRange && property.flatType === "_"+propertyType
-  //         );
-  //       } else {
-  //         return (
-  //           property.areaId.city.cityName === city &&
-  //           property.areaId.areaName === areas[0]
-  //         );
-  //       }
-  //     });
-
-  //     setProperties(filteredProperties);
-  //     console.log(filteredProperties);
-  //   } catch (error) {
-  //     console.error("Error fetching properties:", error);
-  //   }
-  // };
-
-  ///AAAA
   const handleSearch = async () => {
     try {
       const allProperties = await getAllProperties();
 
       const filteredProperties = allProperties.filter((property) => {
         // if (!(property.status === "AVAILABLE")) {
-          // Filter by city
-          const cityMatch = !city || property.areaId.city.cityName === city && property.status === "AVAILABLE";
+        // Filter by city
+        const cityMatch =
+          !city ||
+          (property.areaId.city.cityName === city &&
+            property.status === "AVAILABLE");
 
-          // Filter by area
-          const areaMatch =
-            areas.length === 0 || areas.includes(property.areaId.areaName) && property.status === "AVAILABLE";
+        // Filter by area
+        const areaMatch =
+          areas.length === 0 ||
+          (areas.includes(property.areaId.areaName) &&
+            property.status === "AVAILABLE");
 
-          // Combine city and area
-          const cityAreaMatch = cityMatch && areaMatch && property.status === "AVAILABLE";
+        // Combine city and area
+        const cityAreaMatch =
+          cityMatch && areaMatch && property.status === "AVAILABLE";
 
-          // Filter by property type
-          const propertyTypeMatch =
-            !propertyType || property.flatType === "_" + propertyType && property.status === "AVAILABLE";
+        // Filter by property type
+        const propertyTypeMatch =
+          !propertyType ||
+          (property.flatType === "_" + propertyType &&
+            property.status === "AVAILABLE");
 
-          // Filter by price range
-          const priceMatch = !priceRange || getPriceRangeMatch(property.price) && property.status === "AVAILABLE";
+        // Filter by price range
+        const priceMatch =
+          !priceRange ||
+          (getPriceRangeMatch(property.price) &&
+            property.status === "AVAILABLE");
 
-          // Combine city, area, and property type
-          const cityAreaPropertyTypeMatch = cityAreaMatch && propertyTypeMatch && property.status === "AVAILABLE";
+        // Combine city, area, and property type
+        const cityAreaPropertyTypeMatch =
+          cityAreaMatch && propertyTypeMatch && property.status === "AVAILABLE";
 
-          // Combine city, area, and price range
-          const cityAreaPriceMatch = cityAreaMatch && priceMatch && property.status === "AVAILABLE";
+        // Combine city, area, and price range
+        const cityAreaPriceMatch =
+          cityAreaMatch && priceMatch && property.status === "AVAILABLE";
 
-          // Return properties that match either combination
-          return cityAreaPropertyTypeMatch || cityAreaPriceMatch;
+        // Return properties that match either combination
+        return cityAreaPropertyTypeMatch || cityAreaPriceMatch;
         // }
       });
 

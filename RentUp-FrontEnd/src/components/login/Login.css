@@ -22,6 +22,19 @@
   margin-bottom: 15px;
 }
 
+
+.forgot-password
+{
+  display: flex;
+  justify-content: space-between;
+}
+
+.forgot-text{
+  color: #27ae60;
+  font-size: small;
+  font-weight: bold;
+}
+
 /* Form Label */
 .form-label {
   display: block;

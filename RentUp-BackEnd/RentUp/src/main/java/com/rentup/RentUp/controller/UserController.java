@@ -2,6 +2,11 @@ package com.rentup.RentUp.controller;
 
 import java.io.IOException;
 
+import com.rentup.RentUp.dto.UserDTO;
+import com.rentup.RentUp.request.UserLoginRequest;
+import com.rentup.RentUp.request.UserSignUpRequest;
+import com.rentup.RentUp.services.ImageHandlingService;
+import com.rentup.RentUp.services.UserService;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -69,8 +74,11 @@ public class UserController {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		}
 	}
-	
-	
+
+	@GetMapping("/{mobileNumber}")
+	public ResponseEntity<?> getUserByMobileNumber(@PathVariable String mobileNumber){
+		return ResponseEntity.status(HttpStatus.OK).body(userService.getUserByMobileNumber(mobileNumber));
+	}
 
 	
 
@@ -102,5 +110,12 @@ public class UserController {
 	public ResponseEntity<?> updateSubscription(@PathVariable String mobileNumber,@PathVariable String planType){
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(userService.updateSubscription(mobileNumber,planType));
 	}
+
+	@GetMapping("/{mobileNumber}/properties")
+	public ResponseEntity<?> getUsersPropertiesLeft(@PathVariable String mobileNumber){
+		System.out.println(mobileNumber);
+		return null;
+	}
+
 
 }

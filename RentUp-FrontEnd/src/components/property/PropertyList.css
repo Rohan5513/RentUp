@@ -34,6 +34,16 @@
     object-fit: cover;
     border-radius: 4px;
   }
+
+
+/* Media query for responsiveness */
+@media screen and (max-width: 600px) {
+    .property-list {
+        grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+    }
+}
+
+  
   
   /* Additional styles for carousel */
   .myCarousel .react-multi-carousel-list {
