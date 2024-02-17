@@ -167,4 +167,22 @@ public class UserServiceImpl implements UserService {
 		return true;
 	}
 
+	@Override
+	public Boolean getUserByMobileNumber(String mobileNumber) {
+		User user = userRepository.findByContactNumber(mobileNumber);
+
+		if(user == null){
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public Boolean changePassword(String mobileNumber, String newPass) {
+		User userEntity = userRepository.findByContactNumber(mobileNumber);
+		userEntity.setPassword(passwordEncoder.encodePassword(newPass));
+		userRepository.save(userEntity);
+		return true;
+	}
+
 }

@@ -1,37 +1,40 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Link, useHistory } from "react-router-dom";
-import "./Login.css"; // Import your CSS file
+import { useHistory, useLocation } from "react-router-dom";
+import '../forgot_pass/Change_pass.css'
 import { useUser } from "../common/UserProvider"; // Import useUser hook from context
 
-const Login = () => {
-  const { setUser } = useUser(); // Get setUser function from context
+const ChangePass = () => {
+  const { setUser } = useUser(); 
+  const [passChange,setPassChange] = useState(false);
   const [formData, setFormData] = useState({
-    mobileNumber: "",
+    newpass: "",
     password: "",
   });
 
+  const location = useLocation();
   const [errors, setErrors] = useState({});
   const [showButtons, setShowButtons] = useState(true);
   const [backendError, setBackendError] = useState("");
   const history = useHistory();
-
+  const { mobileNumber } = location.state.state || {};
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
+      const { name, value } = e.target;
+      setFormData({
+          ...formData,
+          [name]: value,
+        });
+    };
+ 
 
   const validateForm = () => {
     const errors = {};
-    if (!formData.mobileNumber.match(/^\d{10}$/)) {
-      errors.mobileNumber = "Mobile Number must be 10 digits";
-    }
     if (formData.password.length < 6) {
       errors.password = "Password must be at least 6 characters long";
     }
+    if (formData.password != formData.newpass) {
+        errors.password = "Passwords Doesn't match";
+      }
     setErrors(errors);
     return Object.keys(errors).length === 0;
   };
@@ -41,33 +44,20 @@ const Login = () => {
     const isValid = validateForm();
     if (isValid) {
       try {
-        const response = await axios.post(
-          "http://localhost:8080/users/login",
-          formData
-        );
-        console.log("Form submitted:", response.data);
-        setUser(response.data); // Set user state after successful login
-        setShowButtons(false); // Hide login and signup buttons
-        // Redirect user to home page after successful login
-        history.push("/");
+        const response = await axios.put(`http://localhost:8080/users/${mobileNumber}/${formData.newpass}`);
+        setPassChange(true);
+        setTimeout(() => {
+            history.push('/');
+          }, 3000);
       } catch (error) {
         if (error.response) {
-          // Server responded with a status code other than 2xx
-          console.error("Invalid Mobile Number or password");
-          // Set backend error message for display
-          setBackendError("Invalid Mobile Number or password");
+          setBackendError("Invalid Entry");
         } else if (error.request) {
-          // The request was made but no response was received
-          console.error("Invalid Mobile Number or password");
-          // Handle no response scenario, for example, display a generic error message
           setBackendError(
             "Error: Unable to connect to the server. Please try again later."
           );
         } else {
-          // Something happened in setting up the request that triggered an error
-          console.error("Invalid Mobile Number or password");
-          // Handle other errors, for example, display a generic error message
-          setBackendError("Invalid Mobile Number or password");
+          setBackendError("Invalid Entry");
         }
       }
     }
@@ -75,30 +65,29 @@ const Login = () => {
 
   return (
     <div className="login-container">
-      <h2 className="login-title">Login</h2>
+      <h2 className="login-title">Change Password</h2>
       <form onSubmit={handleSubmit} className="login-form">
         <div className="form-group">
-          <label htmlFor="mobileNumber" className="form-label">
-            Mobile Number:
+          <label htmlFor="newpass" className="form-label">
+            New Password:
           </label>
           <input
-            type="tel"
-            id="mobileNumber"
-            name="mobileNumber"
-            value={formData.mobileNumber}
+            type="password"
+            id="newpass"
+            name="newpass"
+            value={formData.newpass}
             onChange={handleChange}
             className="form-input"
           />
-          {errors.mobileNumber && (
-            <div className="error-message">{errors.mobileNumber}</div>
+          {errors.newpass && (
+            <div className="error-message">{errors.newpass}</div>
           )}
         </div>
         <div className="form-group">
           <div className="forgot-password">
           <label htmlFor="password" className="form-label">
-            Password:
+            Re-Type New Password:
           </label>
-          <Link to='/forgot-password'className="forgot-text">Forgot Password?</Link>
           </div>
           <input
             type="password"
@@ -112,6 +101,7 @@ const Login = () => {
           {errors.password && (
             <div className="error-message">{errors.password}</div>
           )}
+          {passChange ? <p className="output">Password Change Successfull</p>:""}
         </div>
         {showButtons && ( // Conditionally render login and signup buttons
           <button type="submit" className="submit-btn">
@@ -124,4 +114,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default ChangePass;

@@ -83,8 +83,11 @@ public class UserController {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		}
 	}
-	
-	
+
+	@GetMapping("/{mobileNumber}")
+	public ResponseEntity<?> getUserByMobileNumber(@PathVariable String mobileNumber){
+		return ResponseEntity.status(HttpStatus.OK).body(userService.getUserByMobileNumber(mobileNumber));
+	}
 
 	@PutMapping("/{userId}")
 	public ResponseEntity<?> updateUserProfile(@PathVariable Integer userId,
@@ -124,6 +127,11 @@ public class UserController {
 	@PutMapping("/subscription/{mobileNumber}/{planType}")
 	public ResponseEntity<?> updateSubscription(@PathVariable String mobileNumber,@PathVariable String planType){
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(userService.updateSubscription(mobileNumber,planType));
+	}
+
+	@PutMapping("/{mobileNumber}/{newPass}")
+	public ResponseEntity<?> changePassWord(@PathVariable String mobileNumber,@PathVariable String newPass){
+		return ResponseEntity.status(HttpStatus.OK).body(userService.changePassword(mobileNumber,newPass));
 	}
 
 }

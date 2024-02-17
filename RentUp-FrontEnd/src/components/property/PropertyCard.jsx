@@ -2,6 +2,7 @@ import React from "react";
 import "./PropertyCard.css";
 
 const PropertyCard = ({ property }) => {
+  // console.log(property);
   return (
     <div className="property-card">
       <h3 className="property-title">{property.address}</h3>

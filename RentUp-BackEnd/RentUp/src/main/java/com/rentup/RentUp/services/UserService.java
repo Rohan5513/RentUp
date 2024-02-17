@@ -21,5 +21,9 @@ public interface UserService {
 	String getSubscriptionType(String mobileNumber);
 
 	Boolean updateSubscription(String mobileNumber,String planType);
+
+	Boolean getUserByMobileNumber(String mobileNumber);
+
+	Boolean changePassword(String mobileNumber,String newPass);
 }
 
