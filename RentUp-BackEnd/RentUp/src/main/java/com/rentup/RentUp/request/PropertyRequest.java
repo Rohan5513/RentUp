@@ -15,4 +15,5 @@ public class PropertyRequest {
     private Double area;
     private String preferredTenant;
     private String flatType;
+    private int price ;
 }

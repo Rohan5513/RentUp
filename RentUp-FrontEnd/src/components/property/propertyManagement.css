@@ -44,9 +44,19 @@
   margin-bottom: 10px;
 }
 
+
 .form > * {
   margin-bottom: 10px;
 }
+
+ 
+
+.message {
+  margin-top: 10px;
+  color: #333;
+}
+
+
 
 .message {
   margin-top: 10px;

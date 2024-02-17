@@ -23,11 +23,13 @@ public class PropertyMapper {
         propertyDTO.setFlatType(property.getFlatType());
         propertyDTO.setCarpetArea(property.getCarpet_area());
         propertyDTO.setStatus(property.getStatus());
+        propertyDTO.setPrice(property.getPrice());
         return propertyDTO;
     }
 
     public Property toEntity(PropertyDTO propertyDTO) {
         Property property = new Property();
+        property.setPrice(propertyDTO.getPrice());
         property.setPropertyId(propertyDTO.getPropertyId());
         property.setPropertyImages(propertyDTO.getPropertyImages());
         property.setAddress(propertyDTO.getAddress());
@@ -42,6 +44,7 @@ public class PropertyMapper {
 
     public  Property mapRequestToEntity(PropertyRequest request) {
         Property property = new Property();
+        property.setPrice(request.getPrice());
         property.setPropertyId(request.getPropertyId());
         property.setPropertyImages(request.getPropertyImages());
         property.setAddress(request.getAddress());
@@ -54,6 +57,7 @@ public class PropertyMapper {
 
     public  PropertyRequest mapEntityToRequest(Property entity) {
         PropertyRequest request = new PropertyRequest();
+        request.setPrice(entity.getPrice());
         request.setPropertyId(entity.getPropertyId());
         request.setPropertyImages(entity.getPropertyImages());
         request.setAddress(entity.getAddress());

@@ -17,5 +17,6 @@ public class PropertyDTO {
 	private PropertyStatus status;
 	private TenantType tenantType;
 	private FlatType flatType;
+	private int price ;
 
 }
