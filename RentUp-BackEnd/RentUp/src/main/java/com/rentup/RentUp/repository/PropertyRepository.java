@@ -11,4 +11,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface PropertyRepository extends JpaRepository<Property, Integer> {
 	List<Property> findByUser(User user);
 
+    Property findByPropertyId(Integer id);
+
 }

@@ -1,15 +1,11 @@
 package com.rentup.RentUp.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -47,4 +43,18 @@ public class User {
 
     @Column(name ="subscription_end_date")
     private Date subscriptionEndDate=null;
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_visited_properties",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "property_id")
+    )
+    private List<Property> visitedProperties = new ArrayList<>();
+
+
+    public void addPropertyVisited(Property property){
+        visitedProperties.add(property);
+    }
+
 }

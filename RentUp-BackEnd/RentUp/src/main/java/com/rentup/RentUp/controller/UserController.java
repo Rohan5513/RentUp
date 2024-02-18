@@ -103,6 +103,10 @@ public class UserController {
 		return userService.getSubscriptionType(mobileNumber);
 	}
 
+	@PutMapping("/{mobileNumber}/{newPass}")
+	public ResponseEntity<?> updatePassWord(@PathVariable String mobileNumber,@PathVariable String newPass){
+		return ResponseEntity.status(HttpStatus.OK).body(userService.changePassword(mobileNumber,newPass));
+	}
 
 	@PutMapping("/subscription/{mobileNumber}/{planType}")
 	public ResponseEntity<?> updateSubscription(@PathVariable String mobileNumber,@PathVariable String planType){
