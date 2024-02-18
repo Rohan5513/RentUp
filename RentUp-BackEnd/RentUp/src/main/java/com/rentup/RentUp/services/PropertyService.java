@@ -13,5 +13,7 @@ public interface PropertyService {
     PropertyDTO saveProperty(PropertyDTO propertyDTO);
     void deleteProperty(Integer id);
     PropertyDTO addProperty(PropertyRequest propertyRequest, List<MultipartFile> images);
+    public List<PropertyDTO> getPropertiesByUserId(Integer userId);
+    void updatePropertyStatusToRented(Integer propertyId);
 }
 
