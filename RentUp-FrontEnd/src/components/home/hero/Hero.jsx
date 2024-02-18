@@ -9,11 +9,13 @@ import PropertyList from "../../property/PropertyList";
 const Hero = () => {
   const [location, setLocation] = useState("");
   const [locations, setLocations] = useState([]);
-  const [areas, setArea] = useState([]);
+  const [areas, setAreas] = useState([]);
   const [city, setCity] = useState("");
   const [propertyType, setPropertyType] = useState("");
   const [priceRange, setPriceRange] = useState("");
   const [properties, setProperties] = useState([]);
+
+  const [area, setArea] = useState("");
 
   useEffect(() => {
     // Fetch properties only when properties state is null or empty
@@ -21,6 +23,7 @@ const Hero = () => {
       const fetchProperties = async () => {
         try {
           const propertiesData = await getAllProperties();
+          console.log(propertiesData)
           setProperties(propertiesData);
         } catch (error) {
           console.error("Error fetching properties:", error);
@@ -73,17 +76,18 @@ const Hero = () => {
         // Filter by area
         const areaMatch =
           areas.length === 0 ||
-          (areas.includes(property.areaId.areaName) &&
+          (area.includes(property.areaId.areaName) &&
             property.status === "AVAILABLE");
 
         // Combine city and area
         const cityAreaMatch =
           cityMatch && areaMatch && property.status === "AVAILABLE";
 
+        
         // Filter by property type
         const propertyTypeMatch =
           !propertyType ||
-          (property.flatType === "_" + propertyType &&
+          (property.flatType ===  propertyType &&
             property.status === "AVAILABLE");
 
         // Filter by price range
@@ -101,7 +105,8 @@ const Hero = () => {
           cityAreaMatch && priceMatch && property.status === "AVAILABLE";
 
         // Return properties that match either combination
-        return cityAreaPropertyTypeMatch || cityAreaPriceMatch;
+        
+        return   cityAreaPropertyTypeMatch && cityAreaPriceMatch || cityAreaMatch && cityMatch;
         // }
       });
 
@@ -137,7 +142,7 @@ const Hero = () => {
       const response = await axios.get(
         `http://localhost:8080/area/${selectedCity}`
       );
-      setArea(response.data);
+      setAreas(response.data);
     } catch (error) {
       console.error("Error fetching areas:", error);
     }
@@ -166,7 +171,7 @@ const Hero = () => {
             </div>
             <div className="box">
               <span>Area</span>
-              <select value={areas} onChange={handleAreaChange}>
+              <select value={area} onChange={handleAreaChange}>
                 <option>Select Area</option>
                 {areas.map((area, index) => (
                   <option key={index} value={area}>
@@ -183,7 +188,9 @@ const Hero = () => {
               >
                 <option>Select Property Type</option>
                 {propertyTypes.map((property, index) => (
-                  <option key={index} value={property}>
+                  
+                  <option key={index} value={"_"+property}>
+                   
                     {property}
                   </option>
                 ))}
