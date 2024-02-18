@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./PropertyCard.css";
+import "../property/PropertyCard.css"
 import { useUser } from "../common/UserProvider";
 import { useHistory } from "react-router-dom";
 import axios from "axios";

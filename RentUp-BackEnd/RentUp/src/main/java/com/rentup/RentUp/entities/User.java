@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,10 +40,10 @@ public class User {
     private String subscriptionType;
 
     @Column(name ="subscription_start_date")
-    private Date subscriptionStartDate = null;
+    private Date subscriptionStartDate = Date.valueOf(LocalDate.now().minusDays(7));
 
     @Column(name ="subscription_end_date")
-    private Date subscriptionEndDate=null;
+    private Date subscriptionEndDate=Date.valueOf(LocalDate.now().minusDays(7));
 
     @ManyToMany
     @JoinTable(
