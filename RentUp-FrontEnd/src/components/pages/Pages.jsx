@@ -14,6 +14,8 @@ import Profile from "../profile/Profile";
 import PropertyManagement from "../property/Property";
 import ForgotPass from "../forgot_pass/forgot_pass";
 import ChangePass from "../forgot_pass/Change_pass";
+import ListedProperty from "../property/ListedProperty";
+import AdminDashboard from "../admin/Dashboard";
 
 const Pages = () => {
   return (
@@ -33,6 +35,9 @@ const Pages = () => {
           <Route exact path="/property" component={PropertyManagement} />
           <Route exact path="/forgot-password" component={ForgotPass} />
           <Route exact path="/change-password" component={ChangePass} />
+          <Route path="/add" component={PropertyManagement} />
+          <Route exact path="/ListedProperty" component={ListedProperty} />
+          <Route exact path="/admin" component={AdminDashboard} />
         </Switch>
         <Footer />
       </Router>

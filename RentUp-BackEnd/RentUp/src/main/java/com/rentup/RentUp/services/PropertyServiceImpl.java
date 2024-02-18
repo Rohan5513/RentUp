@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 
 import com.rentup.RentUp.dto.PropertyDTO;
 import com.rentup.RentUp.entities.Property;
+import com.rentup.RentUp.entities.PropertyStatus;
+import com.rentup.RentUp.entities.User;
 import com.rentup.RentUp.mapper.PropertyMapper;
 import com.rentup.RentUp.repository.AreaRepository;
 import com.rentup.RentUp.repository.PropertyRepository;
@@ -102,6 +104,28 @@ public class PropertyServiceImpl implements PropertyService {
             return null;
         }
     }
+    
+	@Override
+	public List<PropertyDTO> getPropertiesByUserId(Integer userId) {
+		 User user = userRepository.findById(userId).orElseThrow() ;
+		 List<Property> list = propertyRepository.findByUser(user); 
+		 System.out.println(list);
+		 List<PropertyDTO> propertyDTOs = list.stream()
+		            .map(propertyMapper::toDTO) // Assuming 'this' refers to the controller instance
+		            .collect(Collectors.toList());
+		 
+		 
+		return propertyDTOs ;
+	}
+
+	 public void updatePropertyStatusToRented(Integer propertyId) {
+	        Property property = propertyRepository.findById(propertyId)
+	                .orElseThrow(() -> new RuntimeException("Property not found with id: " + propertyId));
+
+	        property.setStatus(PropertyStatus.RENTED);
+	        propertyRepository.save(property);
+	    }
+
 
 
 

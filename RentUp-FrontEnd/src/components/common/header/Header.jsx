@@ -9,7 +9,6 @@ const Header = () => {
   const { user, setUser } = useUser(); // Get user and setUser function from context
   const [navList, setNavList] = useState(false);
   const history = useHistory(); // Initialize useHistory hook
-  
 
   const navData = getNavData(user); // Get navigation data based on user login state
 
@@ -21,7 +20,7 @@ const Header = () => {
     history.push("/");
   };
 
-  console.log(user!=null);
+  console.log(user != null);
   return (
     <>
       <header>
@@ -39,14 +38,21 @@ const Header = () => {
                     </Link>
                   ) : user != null ? (
                     // Render all links when user is not null
-                    <Link to={item.path}>{item.text}</Link>
+                    <>
+                      <Link to={item.path}>{item.text}</Link>
+                      {item.path === "/add" && (
+                        <Link to="/ListedProperty">Show Listed Property</Link>
+                      )}
+                      {item.path === "/property" && (
+                        <Link to="/ListedProperty">Show Listed Property</Link>
+                      )}
+                    </>
                   ) : item.path !== "/property" ? (
                     // Render all links except /add when user is null
                     <Link to={item.path}>{item.text}</Link>
                   ) : null}
                 </li>
               ))}
-              
             </ul>
           </div>
           <div className="toggle">
