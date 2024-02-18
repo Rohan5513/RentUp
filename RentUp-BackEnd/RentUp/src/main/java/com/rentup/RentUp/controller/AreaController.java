@@ -1,5 +1,6 @@
 package com.rentup.RentUp.controller;
 
+import com.rentup.RentUp.dto.AreaDTO;
 import com.rentup.RentUp.services.AreaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,4 +27,20 @@ public class AreaController {
         System.out.println(cityName);
         return ResponseEntity.status(HttpStatus.OK).body(areaService.getAreaByCityName(cityName));
     }
+    
+    @PostMapping("/add")
+    public ResponseEntity<String> addArea(@RequestBody AreaDTO area){
+    	
+    	if(areaService.addArea(area)) {
+    	return ResponseEntity.status(HttpStatus.CREATED).build();
+    	}
+    	
+    		
+		return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
+    	
+    }
+    
+    	
+    
+    
 }

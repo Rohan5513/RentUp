@@ -1,5 +1,6 @@
 package com.rentup.RentUp.services;
 
+import com.rentup.RentUp.dto.AreaDTO;
 import com.rentup.RentUp.entities.Area;
 import com.rentup.RentUp.entities.City;
 import com.rentup.RentUp.repository.AreaRepository;
@@ -37,5 +38,18 @@ public class AreaServiceImpl implements AreaService{
                 .map(Area::getAreaName).collect(Collectors.toList());
         return areaNames;
     }
+
+	@Override
+	public boolean addArea(AreaDTO area) {
+		City city = cityRepo.findByCityName(area.getCity()) ;
+		Area newArea = new Area();
+		newArea.setCity(city);
+		newArea.setAreaName(area.getAreaName());
+		Area save = areaRepo.save(newArea) ;
+		if(save != null) {
+			return true ;
+		}
+		return false;
+	}
 }
 
