@@ -1,12 +1,16 @@
 package com.rentup.RentUp.mapper;
 
 import com.rentup.RentUp.dto.PropertyDTO;
+import com.rentup.RentUp.dto.PropertyVisitDTO;
 import com.rentup.RentUp.entities.FlatType;
 import com.rentup.RentUp.entities.Property;
 import com.rentup.RentUp.entities.PropertyStatus;
+import com.rentup.RentUp.entities.PropertyVisit;
 import com.rentup.RentUp.entities.TenantType;
 import com.rentup.RentUp.request.PropertyRequest;
 import org.springframework.stereotype.Component;
+
+import java.sql.Date;
 
 
 @Component
@@ -69,5 +73,14 @@ public class PropertyMapper {
         request.setFlatType(entity.getFlatType().name());
         return request;
     }
+
+    public PropertyVisit mapVisitRequestToEntity(PropertyVisitDTO propertyVisitDTO){
+        PropertyVisit visit = new PropertyVisit();
+        visit.setUser(propertyVisitDTO.getUser());
+        visit.setProperty(propertyVisitDTO.getProperty());
+        visit.setVisitDate(Date.valueOf(propertyVisitDTO.getVisitDate()));
+        return visit;
+    }
+
 }
 

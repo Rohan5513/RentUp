@@ -3,6 +3,7 @@ package com.rentup.RentUp.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -47,4 +48,11 @@ public class Property {
     private FlatType flatType;
     
     private int price ;
+
+    @ManyToMany(mappedBy = "visitedProperties")
+    private List<User> visitors = new ArrayList<>();
+
+    public void addVisitor(User user){
+        visitors.add(user);
+    }
 }
