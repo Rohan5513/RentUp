@@ -23,7 +23,7 @@ const Hero = () => {
       const fetchProperties = async () => {
         try {
           const propertiesData = await getAllProperties();
-          console.log(propertiesData)
+          console.log(propertiesData);
           setProperties(propertiesData);
         } catch (error) {
           console.error("Error fetching properties:", error);
@@ -83,11 +83,10 @@ const Hero = () => {
         const cityAreaMatch =
           cityMatch && areaMatch && property.status === "AVAILABLE";
 
-        
         // Filter by property type
         const propertyTypeMatch =
           !propertyType ||
-          (property.flatType ===  propertyType &&
+          (property.flatType === propertyType &&
             property.status === "AVAILABLE");
 
         // Filter by price range
@@ -105,8 +104,11 @@ const Hero = () => {
           cityAreaMatch && priceMatch && property.status === "AVAILABLE";
 
         // Return properties that match either combination
-        
-        return   cityAreaPropertyTypeMatch && cityAreaPriceMatch || cityAreaMatch && cityMatch;
+
+        return (
+          (cityAreaPropertyTypeMatch && cityAreaPriceMatch) ||
+          (cityAreaMatch && cityMatch)
+        );
         // }
       });
 
@@ -188,9 +190,7 @@ const Hero = () => {
               >
                 <option>Select Property Type</option>
                 {propertyTypes.map((property, index) => (
-                  
-                  <option key={index} value={"_"+property}>
-                   
+                  <option key={index} value={"_" + property}>
                     {property}
                   </option>
                 ))}

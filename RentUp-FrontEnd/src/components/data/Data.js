@@ -49,14 +49,14 @@ export const getNavData = (user) => {
     text: "about",
     path: "/about",
   },
-  {
-    text: "services",
-    path: "/services",
-  },
-  {
-    text: "blog",
-    path: "/blog",
-  },
+  // {
+  //   text: "services",
+  //   path: "/services",
+  // },
+  // {
+  //   text: "blog",
+  //   path: "/blog",
+  // },
   {
     text: "pricing",
     path: "/pricing",
@@ -391,23 +391,40 @@ export const socialMediaLinks = [
   // Add more social media platforms and their links as needed
 ];
 
+// add to Data.js for ABOUT
 export const teamMembers = [
-    {
-      name: "John Doe",
-      prn: "PRN123",
-      college: "ABC University",
-      profilePicture: "../images/customer/team-1.jpg",
-    },
-    {
-      name: "Jane Smith",
-      prn: "PRN456",
-      college: "XYZ College",
-      profilePicture: "../images/customer/team-2.jpg",
-    },
-    // Add details of other team members as needed
-  ];
-
-  
+  {
+    name: "Kamlesh Deokar",
+    prn: "230940120051",
+    college: "CDAC ACTS",
+    profilePicture: "../images/customer/kmalesh.jpg",
+  },
+  {
+    name: "Suraj Wankhade",
+    prn: "230940120203",
+    college: "CDAC ACTS",
+    profilePicture: "../images/customer/Suraj.jpg",
+  },
+  {
+    name: "Akash Gholve",
+    prn: "230940120063",
+    college: "CDAC ACTS",
+    profilePicture: "src\components\images\customer\Akash.jpg",
+  },
+  {
+    name: "Rohan Auti",
+    prn: "230940120155",
+    college: "CDAC ACTS",
+    profilePicture: "../images/customer/Rohan.jpg",
+  },
+  {
+    name: "Aniket ",
+    prn: "230940120024",
+    college: "CDAC ACTS",
+    profilePicture: "../images/customer/Aniket.jpg",
+  },
+  // Add details of other team members as needed
+];
   
   export const getAreas = async (city) => {
   try {

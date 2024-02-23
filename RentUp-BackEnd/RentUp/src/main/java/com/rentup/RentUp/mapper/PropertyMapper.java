@@ -1,16 +1,12 @@
 package com.rentup.RentUp.mapper;
 
 import com.rentup.RentUp.dto.PropertyDTO;
-import com.rentup.RentUp.dto.PropertyVisitDTO;
 import com.rentup.RentUp.entities.FlatType;
 import com.rentup.RentUp.entities.Property;
 import com.rentup.RentUp.entities.PropertyStatus;
-import com.rentup.RentUp.entities.PropertyVisit;
 import com.rentup.RentUp.entities.TenantType;
 import com.rentup.RentUp.request.PropertyRequest;
 import org.springframework.stereotype.Component;
-
-import java.sql.Date;
 
 
 @Component
@@ -19,7 +15,7 @@ public class PropertyMapper {
     public PropertyDTO toDTO(Property property) {
         PropertyDTO propertyDTO = new PropertyDTO();
         propertyDTO.setPropertyId(property.getPropertyId());
-        propertyDTO.setPropertyImages(property.getPropertyImages());
+//        propertyDTO.setPropertyImages(property.getPropertyImages());
         propertyDTO.setAddress(property.getAddress());
         propertyDTO.setAreaId(property.getArea());
         propertyDTO.setUserId(property.getUser());
@@ -35,7 +31,7 @@ public class PropertyMapper {
         Property property = new Property();
         property.setPrice(propertyDTO.getPrice());
         property.setPropertyId(propertyDTO.getPropertyId());
-        property.setPropertyImages(propertyDTO.getPropertyImages());
+//        property.setPropertyImages(propertyDTO.getPropertyImages());
         property.setAddress(propertyDTO.getAddress());
         property.setArea(propertyDTO.getAreaId());
         property.setUser(propertyDTO.getUserId());
@@ -73,14 +69,5 @@ public class PropertyMapper {
         request.setFlatType(entity.getFlatType().name());
         return request;
     }
-
-    public PropertyVisit mapVisitRequestToEntity(PropertyVisitDTO propertyVisitDTO){
-        PropertyVisit visit = new PropertyVisit();
-        visit.setUser(propertyVisitDTO.getUser());
-        visit.setProperty(propertyVisitDTO.getProperty());
-        visit.setVisitDate(Date.valueOf(propertyVisitDTO.getVisitDate()));
-        return visit;
-    }
-
 }
 

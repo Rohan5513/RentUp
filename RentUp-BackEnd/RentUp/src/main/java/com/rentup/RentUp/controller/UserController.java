@@ -2,11 +2,6 @@ package com.rentup.RentUp.controller;
 
 import java.io.IOException;
 
-import com.rentup.RentUp.dto.UserDTO;
-import com.rentup.RentUp.request.UserLoginRequest;
-import com.rentup.RentUp.request.UserSignUpRequest;
-
-import com.rentup.RentUp.services.UserService;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,14 +13,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.razorpay.Order;
 import com.razorpay.RazorpayClient;
 import com.razorpay.RazorpayException;
-
+import com.rentup.RentUp.dto.UserDTO;
+import com.rentup.RentUp.request.UserLoginRequest;
+import com.rentup.RentUp.request.UserSignUpRequest;
+import com.rentup.RentUp.services.UserService;
 
 
 
@@ -72,7 +71,6 @@ public class UserController {
 		}
 	}
 
-
 	@GetMapping("/{mobileNumber}")
 	public ResponseEntity<?> getUserByMobileNumber(@PathVariable String mobileNumber){
 		return ResponseEntity.status(HttpStatus.OK).body(userService.getUserByMobileNumber(mobileNumber));
@@ -102,10 +100,16 @@ public class UserController {
 	public String getSubsricptionType(@PathVariable String mobileNumber){
 		return userService.getSubscriptionType(mobileNumber);
 	}
+	
+	@PutMapping("/{userId}")
+	public ResponseEntity<?> updateUserProfile(@PathVariable Integer userId,
+											   @RequestParam("userName") String userName,
+											   @RequestParam("userEmail") String userEmail
+											  ) throws Exception {
+		UserDTO userDTO = userService.updateUser(userId, userName,userEmail);
+		System.out.println(userDTO);
+		return ResponseEntity.ok(userDTO);
 
-	@PutMapping("/{mobileNumber}/{newPass}")
-	public ResponseEntity<?> updatePassWord(@PathVariable String mobileNumber,@PathVariable String newPass){
-		return ResponseEntity.status(HttpStatus.OK).body(userService.changePassword(mobileNumber,newPass));
 	}
 
 	@PutMapping("/subscription/{mobileNumber}/{planType}")
@@ -117,6 +121,11 @@ public class UserController {
 	public ResponseEntity<?> getUsersPropertiesLeft(@PathVariable String mobileNumber){
 		System.out.println(mobileNumber);
 		return null;
+	}
+	
+	@PutMapping("/{mobileNumber}/{newPass}")
+	public ResponseEntity<?> updatePassWord(@PathVariable String mobileNumber,@PathVariable String newPass){
+		return ResponseEntity.status(HttpStatus.OK).body(userService.changePassword(mobileNumber,newPass));
 	}
 
 

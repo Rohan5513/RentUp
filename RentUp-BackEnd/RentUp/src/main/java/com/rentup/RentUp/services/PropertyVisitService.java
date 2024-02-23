@@ -1,11 +1,11 @@
 package com.rentup.RentUp.services;
 
-import com.rentup.RentUp.dto.PropertyDTO;
-import com.rentup.RentUp.dto.PropertyVisitDTO;
+import java.sql.Date;
+
+import com.rentup.RentUp.dto.UserDTO;
 
 public interface PropertyVisitService {
+    UserDTO addVisit(Integer userId, Integer propertyId, Date date);
 
-    String scheduleVisit(PropertyVisitDTO propertyVisitDTO);
-
-    Boolean isVisitScheduled(String mobileNumber, PropertyDTO propertyDTO);
+    Boolean isScheduled(Integer userId,Integer propertyId);
 }

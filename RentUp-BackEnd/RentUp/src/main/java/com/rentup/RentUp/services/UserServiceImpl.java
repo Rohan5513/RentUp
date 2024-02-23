@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.rentup.RentUp.dto.UserDTO;
 import com.rentup.RentUp.entities.User;
 import com.rentup.RentUp.repository.UserRepository;
+import com.rentup.RentUp.request.ChangePasswordRequest;
 import com.rentup.RentUp.request.UserSignUpRequest;
 import com.rentup.RentUp.security.PasswordEncoder;
 
@@ -29,7 +30,13 @@ public class UserServiceImpl implements UserService {
 	private PasswordEncoder passwordEncoder;
 
 	@Override
-	public UserDTO addUser(UserSignUpRequest request) {
+	public UserDTO addUser(UserSignUpRequest request) throws Exception {
+		
+		User userByMobile  = userRepository.findByContactNumber(request.getContactNumber());
+		
+		User userByEmail = userRepository.findByEmail(request.getEmail());
+		
+		if(userByMobile== null && userByEmail== null) {
 
 		User user = mapper.map(request, User.class);
 
@@ -39,6 +46,16 @@ public class UserServiceImpl implements UserService {
 		User savedUser = userRepository.save(user);
 
 		return mapper.map(savedUser, UserDTO.class);
+		}
+		else {
+			if(userByEmail !=null) {
+				throw new Exception("Email already exists!!!");
+			}
+			if(userByMobile !=null) {
+				throw new Exception("Mobile number already existes!!!!!");
+			}
+			return null;
+		}
 	}
 
 	@Override
@@ -83,22 +100,25 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserDTO updateUser(Integer userId, String userName, String userEmail, MultipartFile userProfilePicture)
-			throws IOException, Exception {
+	public UserDTO updateUser(Integer userId, String userName, String userEmail) throws Exception
+			 {
 		User user = userRepository.findById(userId).orElseThrow();
 
+//		if(user.getEmail().equalsIgnoreCase(userEmail)) {
+//			throw new Exception("Email already registered!!!!");
+//		}
 		user.setEmail(userEmail);
 		user.setName(userName);
-		byte[] userProfilePictureBytes = null;
-		try {
-			if (userProfilePicture != null) {
-				userProfilePictureBytes = userProfilePicture.getBytes();
-			}
-		} catch (IOException e) {
-			System.out.println(e.getMessage());
-			e.printStackTrace();
-		}
-		// user.setProfilePicture(userProfilePictureBytes);
+//		byte[] userProfilePictureBytes = null;
+//		try {
+//			if (userProfilePicture != null) {
+//				userProfilePictureBytes = userProfilePicture.getBytes();
+//			}
+//		} catch (IOException e) {
+//			System.out.println(e.getMessage());
+//			e.printStackTrace();
+//		}
+//		 user.setProfilePicture(null);
 		return mapper.map(userRepository.save(user), UserDTO.class);
 
 	}

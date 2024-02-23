@@ -18,6 +18,7 @@ const Header = () => {
     setUser(null);
     // Redirect to home page
     history.push("/");
+    // console.log('from logout');
   };
 
   console.log(user != null);

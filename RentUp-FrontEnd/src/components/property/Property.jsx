@@ -182,13 +182,13 @@ const PropertyManagement = () => {
             </option>
           ))}
         </select>
-        <label htmlFor="images">Upload Images:</label>
+        {/* <label htmlFor="images">Upload Images:</label>
         <input
           type="file"
           id="images"
           multiple
           onChange={(e) => setImages(e.target.files)}
-        />
+        /> */}
         <button onClick={handleAddProperty}>Add Property</button>
         <p className="message">{message}</p>{" "}
         {/* Display message below button */}

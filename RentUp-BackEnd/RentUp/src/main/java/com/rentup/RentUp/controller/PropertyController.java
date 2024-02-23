@@ -56,19 +56,16 @@ public class PropertyController {
     public ResponseEntity<?> getPropertiesByUserId(@PathVariable  Integer userId) {
     	System.out.println(userId);
         List<PropertyDTO> properties = propertyService.getPropertiesByUserId(userId);
-        System.out.println(properties.get(0));
+        
         return new ResponseEntity<>(properties, HttpStatus.OK);
     }
     
     @PutMapping("/{propertyId}")
     public ResponseEntity<?> updatePropertyStatusToRented(@PathVariable Integer propertyId) {
-        try {
+       
             propertyService.updatePropertyStatusToRented(propertyId);
             return new ResponseEntity<>(HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+       
     }
-    
 }
 

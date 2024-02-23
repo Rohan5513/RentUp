@@ -1,13 +1,14 @@
 package com.rentup.RentUp.entities;
 
+
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.sql.Date;
 
 @Entity
-@Data
 @Table(name = "property_visit")
+@Data
 public class PropertyVisit {
 
     @Id
@@ -15,12 +16,9 @@ public class PropertyVisit {
     @Column(name = "visit_id")
     private Integer visitId;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    private User user;
+    private Integer user;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Property property;
+    private Integer property;
 
-    @Column(name = "visit_date")
     private Date visitDate;
 }

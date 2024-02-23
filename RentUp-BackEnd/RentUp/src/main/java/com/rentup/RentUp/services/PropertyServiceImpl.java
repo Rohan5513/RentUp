@@ -4,6 +4,10 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.rentup.RentUp.dto.PropertyDTO;
 import com.rentup.RentUp.entities.Property;
 import com.rentup.RentUp.entities.PropertyStatus;
@@ -13,9 +17,6 @@ import com.rentup.RentUp.repository.AreaRepository;
 import com.rentup.RentUp.repository.PropertyRepository;
 import com.rentup.RentUp.repository.UserRepository;
 import com.rentup.RentUp.request.PropertyRequest;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 
 @Service
@@ -105,7 +106,7 @@ public class PropertyServiceImpl implements PropertyService {
         }
     }
     
-	@Override
+    @Override
 	public List<PropertyDTO> getPropertiesByUserId(Integer userId) {
 		 User user = userRepository.findById(userId).orElseThrow() ;
 		 List<Property> list = propertyRepository.findByUser(user); 
@@ -118,6 +119,7 @@ public class PropertyServiceImpl implements PropertyService {
 		return propertyDTOs ;
 	}
 
+    @Override
 	 public void updatePropertyStatusToRented(Integer propertyId) {
 	        Property property = propertyRepository.findById(propertyId)
 	                .orElseThrow(() -> new RuntimeException("Property not found with id: " + propertyId));
@@ -126,6 +128,7 @@ public class PropertyServiceImpl implements PropertyService {
 	        propertyRepository.save(property);
 	    }
 
+	
 
 
 

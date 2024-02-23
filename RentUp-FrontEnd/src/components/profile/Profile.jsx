@@ -2,11 +2,10 @@
 import React, { useState, useEffect } from "react";
 import { useUser } from "../common/UserProvider";
 import axios from "axios";
-import "./Profile.css"; // Import the CSS file
+import "./Profile.css"; 
 
 const Profile = () => {
   const { user, setUser } = useUser();
-  console.log(user)
   const [formData, setFormData] = useState({
     userEmail: user.email,
     userName: user.name,
@@ -15,14 +14,7 @@ const Profile = () => {
   const [editMode, setEditMode] = useState(false);
 
   const [userProfilePictureRender, setUserProfilePicture] = useState(null);
-  // console.log(user.contactNumber);
-
-
-  // useEffect(() => {
-  //   if(user != null) {
-  //     var isSubsValid = axios.get(`http://localhost:8080/users/subscription_type/${user.contactNumber}`);
-  //   }
-  // });
+  console.log(user.user);
 
 
   useEffect(() => {

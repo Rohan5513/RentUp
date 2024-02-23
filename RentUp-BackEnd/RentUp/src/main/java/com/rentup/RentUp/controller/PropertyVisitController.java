@@ -1,7 +1,6 @@
 package com.rentup.RentUp.controller;
 
-import com.rentup.RentUp.dto.PropertyDTO;
-import com.rentup.RentUp.dto.PropertyVisitDTO;
+import com.rentup.RentUp.request.PropertyVisitRequest;
 import com.rentup.RentUp.services.PropertyVisitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,16 +13,18 @@ import org.springframework.web.bind.annotation.*;
 public class PropertyVisitController {
 
     @Autowired
-    private PropertyVisitService propertyService;
+    private PropertyVisitService service;
+
 
     @PostMapping("/schedule")
-    public ResponseEntity<?> scheduleVisit(@RequestBody PropertyVisitDTO propertyVisitDTO){
-        return ResponseEntity.status(HttpStatus.OK).body(propertyService.scheduleVisit(propertyVisitDTO));
+    public ResponseEntity<?> scheduleVisit(@RequestBody PropertyVisitRequest request){
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.addVisit(request.getUserId(),request.getPropertyId(),request.getVisitDate()));
     }
 
-    @PostMapping("/schedule/{mobileNumber}")
-    public ResponseEntity<?> isVisitScheduled(@PathVariable String mobileNumber,@RequestBody PropertyDTO propertyDTO){
-        return  ResponseEntity.status(HttpStatus.OK).body(propertyService.isVisitScheduled(mobileNumber,propertyDTO));
+    @GetMapping("/schedule/{userId}/{propertyId}")
+    public ResponseEntity<?> isScheduled(@PathVariable String userId,@PathVariable String propertyId){
+        return ResponseEntity.status(HttpStatus.OK).body(service.isScheduled(Integer.parseInt(userId),Integer.parseInt(propertyId)));
     }
+
 
 }
