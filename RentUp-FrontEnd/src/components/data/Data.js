@@ -27,6 +27,7 @@
 // ]
 
 import  axios   from "axios";
+import Aniket from "../images/customer/Aniket.jpg"
 
 export const getCities = async () => {
   try {
@@ -58,10 +59,6 @@ export const getNavData = (user) => {
   //   path: "/blog",
   // },
   {
-    text: "pricing",
-    path: "/pricing",
-  },
-  {
     text: "contact",
     path: "/contact",
   },
@@ -70,6 +67,10 @@ export const getNavData = (user) => {
     path: "/property",
   },
     // Your other navigation items here
+    {
+      text: "Visits Requested",
+      path: "/visits",
+    },
     { text: user ? 'Logout' : 'Login', path: user? '/logout':'/login'},
     { text:user? 'Profile':'Sign up', path: user?'/profile':'/signup' },
   ];
@@ -392,6 +393,7 @@ export const socialMediaLinks = [
 ];
 
 // add to Data.js for ABOUT
+
 export const teamMembers = [
   {
     name: "Kamlesh Deokar",

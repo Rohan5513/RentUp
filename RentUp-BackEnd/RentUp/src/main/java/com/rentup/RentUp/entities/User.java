@@ -34,8 +34,8 @@ public class User {
     private String contactNumber;
 
     
-//    @Column(name = "profile_picture")
-//    private String profilePicture;
+    // @Column(name = "profile_picture")
+    // private String profilePicture;
 
     @Column(name = "properties_left")
     private Integer propertiesLeft;

@@ -45,8 +45,8 @@ const Login = () => {
           "http://localhost:8080/users/login",
           formData
         );
-        console.log("Form submitted:", response.data);
-        setUser(response.data); // Set user state after successful login
+        setUser(response.data); 
+        localStorage.setItem("user", JSON.stringify(response.data));
         setShowButtons(false); // Hide login and signup buttons
         
         // Redirect user to home page after successful login

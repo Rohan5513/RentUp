@@ -15,6 +15,7 @@ const Header = () => {
   // Function to handle logout
   const handleLogout = () => {
     // Clear user data
+    localStorage.removeItem('user');
     setUser(null);
     // Redirect to home page
     history.push("/");
@@ -38,7 +39,6 @@ const Header = () => {
                       {item.text}
                     </Link>
                   ) : user != null ? (
-                    // Render all links when user is not null
                     <>
                       <Link to={item.path}>{item.text}</Link>
                       {item.path === "/add" && (

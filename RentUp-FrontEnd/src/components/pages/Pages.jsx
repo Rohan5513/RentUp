@@ -36,6 +36,7 @@ const Pages = () => {
           <Route exact path="/ListedProperty" component={ListedProperty} />
           <Route exact path="/forgot-password" component={ForgotPass} />
           <Route exact path="/change-password" component={ChangePass} />
+          <Route exact path="/visits" component={ListedProperty} />
         </Switch>
         <Footer />
       </Router>
