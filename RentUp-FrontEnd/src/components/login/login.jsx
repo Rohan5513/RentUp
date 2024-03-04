@@ -5,7 +5,7 @@ import "./Login.css"; // Import your CSS file
 import { useUser } from "../common/UserProvider"; // Import useUser hook from context
 
 const Login = () => {
-  const { setUser } = useUser(); 
+  const { setUser,user } = useUser(); 
   const [formData, setFormData] = useState({
     mobileNumber: "",
     password: "",
@@ -48,7 +48,26 @@ const Login = () => {
         setUser(response.data); 
         localStorage.setItem("user", JSON.stringify(response.data));
         setShowButtons(false); // Hide login and signup buttons
-        
+        const user1 = JSON.parse(localStorage.getItem("user"));
+          try{
+            const response1 = await axios.get(`http://localhost:8080/users/profile/${user1.contactNumber}`, {
+        responseType: 'arraybuffer',
+      });
+
+      const base64Image = btoa(
+        new Uint8Array(response1.data).reduce(
+          (data, byte) => data + String.fromCharCode(byte),
+          ''
+        )
+      );
+          
+      localStorage.setItem('profilePicture',JSON.stringify(`data:${response1.headers['content-type']};base64,${base64Image}`));
+
+          }
+          catch(error){
+            console.log(error);
+          }
+
         // Redirect user to home page after successful login
         history.push("/");
       } catch (error) {

@@ -18,18 +18,10 @@ const Profile = () => {
 
 
   useEffect(() => {
-    if (user && user.userProfilePicture) {
-      const byteArray = new Uint8Array(user.userProfilePicture); // Assuming user.userProfilePicture is the byte array
-      console.log(user.userProfilePicture);
-      const base64String = btoa(
-        Array.from(byteArray)
-          .map((byte) => String.fromCharCode(byte))
-          .join("")
-      );
-      setUserProfilePicture(`data:image/jpeg;base64,${base64String}`);
-      console.log('String is ' + base64String);
+    if (user!==null) {
+      setUserProfilePicture(JSON.parse(localStorage.getItem('profilePicture')));
     }
-  }, [user, userProfilePictureRender]);
+  });
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -112,15 +104,11 @@ const Profile = () => {
           </div>
         </form>
       ) : (
+        <div className="profile-pic-container">
         <div className="profile-info">
           <p>Email: {user.email}</p>
           <p>Name: {user.name}</p>
           {/* <p>Is Admin:{user.isAdmin}</p> */}
-          <p>Profile Picture:
-            {userProfilePictureRender && (
-              <img src={userProfilePictureRender} alt="ProfilePicture" />
-            )}
-          </p>
           <p>Contact Number: {user.contactNumber}</p>
           {user.subscriptionType != null ?
             <div>
@@ -132,6 +120,14 @@ const Profile = () => {
           <button onClick={() => setEditMode(true)} className="edit-btn">
             Edit
           </button>
+        </div>
+        <div>
+        <p>
+            {userProfilePictureRender && (
+              <img src={userProfilePictureRender} alt="ProfilePicture" />
+            )}
+          </p>
+        </div>
         </div>
       )}
     </div>
