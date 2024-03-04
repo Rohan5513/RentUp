@@ -27,7 +27,7 @@ const PropertyList = ({ properties }) => {
         {properties && properties.length > 0 ? (
           <Carousel responsive={responsive} className="myCarousel">
             {properties.map((property) => (
-              property.userId.userId == userId ? null : <div key={property.propertyId} className="property-card">
+              property.userId.userId === userId ? null : <div key={property.propertyId} className="property-card">
                 <PropertyCard property={property} />
               </div>
             ))}

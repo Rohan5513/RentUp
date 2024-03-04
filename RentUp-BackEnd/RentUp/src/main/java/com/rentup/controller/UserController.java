@@ -53,9 +53,7 @@ public class UserController {
 	}
 
 
-	@GetMapping(value = "/profile/{mobileNumber}"
-//			, produces = { IMAGE_GIF_VALUE, IMAGE_JPEG_VALUE, IMAGE_PNG_VALUE }
-	)
+	@GetMapping(value = "/profile/{mobileNumber}")
 	public ResponseEntity<?> getProfilePicture(@PathVariable String mobileNumber){
 		return ResponseEntity.status(HttpStatus.OK).body(userService.getProfilePicture(mobileNumber));
 	}

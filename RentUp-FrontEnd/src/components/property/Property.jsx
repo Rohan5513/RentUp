@@ -3,6 +3,7 @@ import "./propertyManagement.css";
 import { getCities, getAreas } from "../data/Data";
 import { useUser } from "../common/UserProvider";
 import { getAllProperties } from "../data/Data";
+import axios from "axios";
 
 const PropertyManagement = () => {
   const [flatType, setFlatType] = useState("");
@@ -12,7 +13,7 @@ const PropertyManagement = () => {
   const [city, setCity] = useState("");
   const [areaId, setAreaId] = useState("");
   const [price, setPrice] = useState(""); // State for price input
-  const [images, setImages] = useState([]);
+  const [image, setImage] = useState(null);
   const [citiesData, setCitiesData] = useState([]);
   const [areasData, setAreasData] = useState([]);
   const [message, setMessage] = useState(""); // State for displaying messages
@@ -55,7 +56,7 @@ const PropertyManagement = () => {
       address &&
       city &&
       areaId &&
-      price && // Check if price is provided
+      price && 
       user?.userId
     ) {
       try {
@@ -71,29 +72,29 @@ const PropertyManagement = () => {
         if (matchingProperty) {
           setMessage("This property already exists.");
         } else {
-          const propertyData = {
-            flatType,
-            preferredTenant,
-            area,
-            address,
-            city,
-            areaId,
-            price, // Include price in property data
-            userId: user.userId,
-          };
 
-          const addResponse = await fetch(
+          const formObj = new FormData();
+          formObj.append('flatType',flatType);
+          formObj.append('preferredTenant',preferredTenant);
+          formObj.append('area',area);
+          formObj.append('address',address);
+          formObj.append('areaId',areaId);
+          formObj.append('price',price);
+          formObj.append('userId',user.userId);
+          formObj.append('propertyPhoto',image[0]);
+
+          const addResponse = await axios.post(
             "http://localhost:8080/properties/add",
+            formObj,
             {
-              method: "POST",
               headers: {
-                "Content-Type": "application/json",
+                'Content-Type': 'multipart/form-data'
               },
-              body: JSON.stringify(propertyData),
             }
-          );
 
-          if (addResponse.ok) {
+          );
+            console.log(addResponse);
+          if (addResponse.status === 200) {
             setMessage("Property added successfully.");
           } else {
             setMessage("Failed to add property.");
@@ -186,7 +187,8 @@ const PropertyManagement = () => {
         <input
           type="file"
           id="images"
-          onChange={(e) => setImages(e.target.files)}
+          required
+          onChange={(e) => setImage(e.target.files)}
         />
         <button onClick={handleAddProperty}>Add Property</button>
         <p className="message">{message}</p>{" "}

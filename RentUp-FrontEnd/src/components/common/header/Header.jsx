@@ -1,28 +1,23 @@
 import React, { useState } from "react";
 import "./header.css";
 import { Link } from "react-router-dom";
-import { useUser } from "../UserProvider"; // Import useUser hook from context
-import { getNavData } from "../../data/Data"; // Import getNavData function
-import { useHistory } from "react-router-dom"; // Import useHistory hook to redirect
+import { useUser } from "../UserProvider"; 
+import { getNavData } from "../../data/Data"; 
+import { useHistory } from "react-router-dom"; 
 
 const Header = () => {
-  const { user, setUser } = useUser(); // Get user and setUser function from context
+  const { user, setUser } = useUser(); 
   const [navList, setNavList] = useState(false);
-  const history = useHistory(); // Initialize useHistory hook
+  const history = useHistory(); 
 
-  const navData = getNavData(user); // Get navigation data based on user login state
+  const navData = getNavData(user); 
 
-  // Function to handle logout
   const handleLogout = () => {
-    // Clear user data
     localStorage.removeItem('user');
     setUser(null);
-    // Redirect to home page
     history.push("/");
-    // console.log('from logout');
   };
 
-  console.log(user != null);
   return (
     <>
       <header>

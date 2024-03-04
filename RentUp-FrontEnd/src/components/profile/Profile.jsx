@@ -14,7 +14,7 @@ const Profile = () => {
   const [editMode, setEditMode] = useState(false);
 
   const [userProfilePictureRender, setUserProfilePicture] = useState(null);
-  console.log(user.user);
+ 
 
 
   useEffect(() => {
@@ -31,9 +31,9 @@ const Profile = () => {
               ''
             )
           );
-  
+              
           setUserProfilePicture(`data:${response1.headers['content-type']};base64,${base64Image}`);
-        } catch (error) {
+          } catch (error) {
           console.log(error);
         }
       }
@@ -55,7 +55,7 @@ const Profile = () => {
         formData,
         {
           headers: {
-            "Content-Type": "multipart/form-data", // Set content type to multipart/form-data
+            "Content-Type": "multipart/form-data", 
           },
         }
       );

@@ -85,7 +85,6 @@ public class UserServiceImpl implements UserService {
 	public byte[] getProfilePicture(String mobileNumber) {
 		User user = userRepository.findByContactNumber(mobileNumber);
 		UserProfilePicture profilePicture = profilePictureRepository.findByUser(user);
-		System.out.println("Hello");
 		return profilePicture.getContent();
 	}
 

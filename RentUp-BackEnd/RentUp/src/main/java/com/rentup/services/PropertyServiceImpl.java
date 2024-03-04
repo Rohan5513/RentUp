@@ -2,14 +2,17 @@ package com.rentup.services;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.rentup.dto.PropertyDTO;
 import com.rentup.entities.Property;
+import com.rentup.entities.PropertyPicture;
 import com.rentup.entities.PropertyStatus;
 import com.rentup.entities.User;
 import com.rentup.mapper.PropertyMapper;
 import com.rentup.repository.AreaRepository;
+import com.rentup.repository.PropertyPictureRepository;
 import com.rentup.repository.PropertyRepository;
 import com.rentup.repository.UserRepository;
 import com.rentup.request.PropertyRequest;
@@ -32,6 +35,9 @@ public class PropertyServiceImpl implements PropertyService {
 
     @Autowired
     private PropertyMapper propertyMapper;
+
+    @Autowired
+    private PropertyPictureRepository propertyPictureRepository;
 
     @Override
     public List<PropertyDTO> getAllProperties() {
@@ -63,30 +69,24 @@ public class PropertyServiceImpl implements PropertyService {
     }
 
     @Override
-    public PropertyDTO addProperty(PropertyRequest propertyRequest, List<MultipartFile> images) {
-        // Validate or process images as needed
-        // You may want to save images to a storage service (AWS S3, Google Cloud Storage, etc.) and store the URLs in the database
+    public PropertyDTO addProperty(PropertyRequest propertyRequest, MultipartFile image) throws IOException {
 
         Property property =propertyMapper.mapRequestToEntity(propertyRequest);
 
         property.setArea(areaRepository.findByAreaName(propertyRequest.getAreaId()));
-        System.out.println(property);
         property.setUser(userRepository.findById(propertyRequest.getUserId()).orElseThrow() );
-        if(images!=null) {
-            // Set images in the property entity based on your data model
-            property.setPropertyImages(processImages(images));
-        }
-        property.setPropertyImages(null);
+
 
         Property savedProperty = propertyRepository.save(property);
-        System.out.println("saved"+savedProperty);
+        PropertyPicture propertyPicture = new PropertyPicture();
+        propertyPicture.setProperty(savedProperty);
+        propertyPicture.setContent(image.getBytes());
+        propertyPictureRepository.save(propertyPicture);
+
         return propertyMapper.toDTO(savedProperty);
     }
 
     private List<byte[]> processImages(List<MultipartFile> images) {
-        // Implement logic to process and save images, e.g., convert to byte arrays
-        // You may use a library like Apache Commons IO to convert MultipartFile to byte array
-        // Be aware of potential security issues, validate and sanitize input data
 
         // Example: Convert MultipartFiles to byte arrays
         List<byte[]> imageBytesList = images.stream()
@@ -109,12 +109,11 @@ public class PropertyServiceImpl implements PropertyService {
     @Override
 	public List<PropertyDTO> getPropertiesByUserId(Integer userId) {
 		 User user = userRepository.findById(userId).orElseThrow() ;
-		 List<Property> list = propertyRepository.findByUser(user); 
-		 System.out.println(list);
+		 List<Property> list = propertyRepository.findByUser(user);
 		 List<PropertyDTO> propertyDTOs = list.stream()
-		            .map(propertyMapper::toDTO) // Assuming 'this' refers to the controller instance
+		            .map(propertyMapper::toDTO)
 		            .collect(Collectors.toList());
-		 
+
 		 
 		return propertyDTOs ;
 	}
@@ -128,8 +127,12 @@ public class PropertyServiceImpl implements PropertyService {
 	        propertyRepository.save(property);
 	    }
 
-	
-
+    @Override
+    public byte[] getPropertyPicture(Integer propertyId) {
+        Optional<Property> property = propertyRepository.findById(propertyId);
+        PropertyPicture propertyPicture = propertyPictureRepository.findByProperty(property);
+        return propertyPicture.getContent();
+    }
 
 
 }

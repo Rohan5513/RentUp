@@ -9,7 +9,6 @@ import java.util.List;
 @Data
 public class PropertyDTO {
 	private int propertyId;
-//	private List<byte[]> propertyImages;
 	private String address;
 	private Area areaId;
 	private User userId;

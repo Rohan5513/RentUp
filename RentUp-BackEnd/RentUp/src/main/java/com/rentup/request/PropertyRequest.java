@@ -1,13 +1,13 @@
 package com.rentup.request;
 
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 @Data
 public class PropertyRequest {
     private int propertyId;
-    private List<byte[]> propertyImages;
     private String address;
     private String areaId;
     private Integer userId;

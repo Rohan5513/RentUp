@@ -1,8 +1,10 @@
 package com.rentup.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import com.rentup.dto.PropertyDTO;
+import com.rentup.dto.UserDTO;
 import com.rentup.request.PropertyRequest;
 import com.rentup.services.PropertyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,14 +27,25 @@ public class PropertyController {
         return new ResponseEntity<>(properties, HttpStatus.OK);
     }
 
-    @PostMapping(value = "/add")
-    public ResponseEntity<?> addProperty(@RequestBody PropertyRequest propertyRequest,
-                                         @RequestParam(value = "images" , required = false) List<MultipartFile> images) {
-        System.out.println(propertyRequest);
-        PropertyDTO addedProperty = propertyService.addProperty(propertyRequest, images);
-        System.out.println(addedProperty);
-        return ResponseEntity.ok(addedProperty);
+    @PostMapping(value = "/add", consumes = "multipart/form-data")
+    public ResponseEntity<?> addProperty(@RequestPart("flatType") String flatType,@RequestPart("area") String area,
+                                         @RequestPart("address") String address,@RequestPart("preferredTenant") String preferredTenant,@RequestPart("areaId") String areaId,
+                                         @RequestPart("price") String price,@RequestPart("userId") String userId,
+                                         @RequestPart("propertyPhoto") MultipartFile propertyPhoto) throws IOException {
+
+        PropertyRequest propertyRequest = new PropertyRequest();
+        propertyRequest.setFlatType(flatType);
+        propertyRequest.setArea(Double.parseDouble(area));
+        propertyRequest.setAddress(address);
+        propertyRequest.setPreferredTenant(preferredTenant);
+        propertyRequest.setAreaId(areaId);
+        propertyRequest.setPrice(Integer.parseInt(price));
+        propertyRequest.setUserId(Integer.parseInt(userId));
+
+        return ResponseEntity.status(HttpStatus.OK).body(propertyService.addProperty(propertyRequest,propertyPhoto));
     }
+
+
 
     @GetMapping("/{id}")
     public ResponseEntity<PropertyDTO> getPropertyById(@PathVariable Integer id) {
@@ -54,7 +67,6 @@ public class PropertyController {
     
     @GetMapping("/users/{userId}")
     public ResponseEntity<?> getPropertiesByUserId(@PathVariable  Integer userId) {
-    	System.out.println(userId);
         List<PropertyDTO> properties = propertyService.getPropertiesByUserId(userId);
         
         return new ResponseEntity<>(properties, HttpStatus.OK);
@@ -66,6 +78,11 @@ public class PropertyController {
             propertyService.updatePropertyStatusToRented(propertyId);
             return new ResponseEntity<>(HttpStatus.OK);
        
+    }
+
+    @GetMapping(value = "/image/{propertyId}")
+    public ResponseEntity<?> getPropertyImage(@PathVariable String propertyId){
+        return ResponseEntity.status(HttpStatus.OK).body(propertyService.getPropertyPicture(Integer.parseInt(propertyId)));
     }
 }
 

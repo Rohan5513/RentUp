@@ -32,7 +32,6 @@ import Aniket from "../images/customer/Aniket.jpg"
 export const getCities = async () => {
   try {
     const response = await axios.get("http://localhost:8080/city/"); // Update the API endpoint
-    console.log('from here'+response.data)
     return response.data;
   } catch (error) {
     console.error("Error fetching cities:", error);

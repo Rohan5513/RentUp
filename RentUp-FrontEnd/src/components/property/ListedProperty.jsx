@@ -1,12 +1,12 @@
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useUser } from "../common/UserProvider"; // Import useUser hook from context
-import "./ListedProperty.css"
+import { useUser } from "../common/UserProvider"; 
+import "./ListedProperty.css";
 
 const ListedProperty = () => {
-  const { user } = useUser(); // Get user from context
+  const { user } = useUser();
   const [properties, setProperties] = useState([]);
+  const [propertyImages, setPropertyImages] = useState([]);
   const [rentedProperties, setRentedProperties] = useState([]);
   const [message, setMessage] = useState("");
 
@@ -17,6 +17,30 @@ const ListedProperty = () => {
           `http://localhost:8080/properties/users/${user.userId}`
         );
         setProperties(response.data);
+
+        const imagePromises = response.data.map(async (property) => {
+          try {
+            const response1 = await axios.get(
+              `http://localhost:8080/properties/image/${property.propertyId}`,
+              {
+                responseType: 'arraybuffer',
+              }
+            );
+            const base64Image = btoa(
+              new Uint8Array(response1.data).reduce(
+                (data, byte) => data + String.fromCharCode(byte),
+                ''
+              )
+            );
+            return { propertyId: property.propertyId, 
+              image : `data:${response1.headers['content-type']};base64,${base64Image}` };
+          } catch (error) {
+            console.log(error);
+          }
+        });
+
+        const images = await Promise.all(imagePromises);
+        setPropertyImages(images);
       } catch (error) {
         console.error("Error fetching properties listed by user:", error);
       }
@@ -50,6 +74,7 @@ const ListedProperty = () => {
       ) : (
         properties.map((property) => (
           <div key={property.propertyId} className="property-card">
+            <div>
             <p>Address: {property.address}</p>
             <p>City: {property.areaId.city.cityName}</p>
             <p>Area: {property.areaId.areaName}</p>
@@ -62,6 +87,14 @@ const ListedProperty = () => {
                 Mark as Rented Out
               </button>
             )}
+            </div>
+            <div>
+            <img
+              src={propertyImages.find(img => img.propertyId === property.propertyId)?.image}
+              alt={`Property ${property.propertyId}`}
+              className="property-image"
+            />
+            </div>
           </div>
         ))
       )}

@@ -15,10 +15,6 @@ public class Property {
     @Column(name = "property_id")
     private int propertyId;
 
-    @ElementCollection
-    @CollectionTable(name = "property_images", joinColumns = @JoinColumn(name = "property_id"))
-    @Column(name = "image")
-    private List<byte[]> propertyImages;
 
     @Column(name = "address")
     private String address;

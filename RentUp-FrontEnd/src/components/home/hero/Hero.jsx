@@ -23,7 +23,7 @@ const Hero = () => {
       const fetchProperties = async () => {
         try {
           const propertiesData = await getAllProperties();
-          console.log(propertiesData);
+          
           setProperties(propertiesData);
         } catch (error) {
           console.error("Error fetching properties:", error);

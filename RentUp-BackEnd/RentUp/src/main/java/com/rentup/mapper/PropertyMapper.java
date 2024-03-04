@@ -47,7 +47,6 @@ public class PropertyMapper {
         Property property = new Property();
         property.setPrice(request.getPrice());
         property.setPropertyId(request.getPropertyId());
-        property.setPropertyImages(request.getPropertyImages());
         property.setAddress(request.getAddress());
         property.setCarpet_area(request.getArea());
         property.setStatus(PropertyStatus.valueOf("AVAILABLE"));
@@ -60,7 +59,6 @@ public class PropertyMapper {
         PropertyRequest request = new PropertyRequest();
         request.setPrice(entity.getPrice());
         request.setPropertyId(entity.getPropertyId());
-        request.setPropertyImages(entity.getPropertyImages());
         request.setAddress(entity.getAddress());
         request.setAreaId(entity.getArea().getAreaName());
         request.setUserId(entity.getUser().getUserId());
