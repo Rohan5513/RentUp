@@ -1,20 +1,4 @@
--- Sample Data for Users Table
-INSERT INTO users (email, password, name, contact_number, profile_picture, properties_left) VALUES
-('john.doe@example.com', 'password123', 'John Doe', '+91 1234567890', NULL, 8),
-('sara.smith@example.com', 'password456', 'Sara Smith', '+91 9876543210', NULL, 3),
-('mike.jones@example.com', 'password789', 'Mike Jones', '+91 7777777777', NULL, NULL),
-('emma.johnson@example.com', 'password012', 'Emma Johnson', '+91 9999999999', NULL, NULL),
-('alex.wilson@example.com', 'password345', 'Alex Wilson', '+91 6666666666', NULL, NULL),
-('grace.miller@example.com', 'password678', 'Grace Miller', '+91 5555555555', NULL, NULL),
-('neha.verma@example.com', 'password789', 'Neha Verma', '+91 8888888888', NULL, 7),
-('vikram.singh@example.com', 'password012', 'Vikram Singh', '+91 7777777777', NULL, 2),
-('sonali.rai@example.com', 'password345', 'Sonali Rai', '+91 9999999999', NULL, NULL),
-('amit.kumar@example.com', 'password678', 'Amit Kumar', '+91 6666666666', NULL, NULL),
-('tanvi.sharma@example.com', 'password901', 'Tanvi Sharma', '+91 5555555555', NULL, NULL),
-('rahul.verma@example.com', 'password234', 'Rahul Verma', '+91 4444444444', NULL, NULL);
-
--- Sample Data for Cities Table
-INSERT INTO cities (city_name) VALUES
+INSERT INTO city (city_name) VALUES
 ('Pune'),
 ('Mumbai'),
 ('Delhi'),
@@ -24,8 +8,9 @@ INSERT INTO cities (city_name) VALUES
 ('Kolkata'),
 ('Ahmedabad');
 
--- Sample Data for Areas Table
-INSERT INTO areas (area_name, city_id) VALUES
+
+
+INSERT INTO area (area_name, city_id) VALUES
 ('Kothrud', 1),
 ('Bandra', 2),
 ('Connaught Place', 3),
@@ -45,87 +30,43 @@ INSERT INTO areas (area_name, city_id) VALUES
 ('Banjara Hills', 5),
 ('T. Nagar', 6),
 ('Salt Lake City', 7),
-('Gandhinagar', 8),
 ('Madhapur', 5),
 ('Adyar', 6),
 ('New Town', 7),
-('S.G. Highway', 8),
+
 ('Kondapur', 5),
 ('Velachery', 6),
 ('Howrah', 7),
-('Maninagar', 8),
+
 ('Secunderabad', 5),
 ('Mylapore', 6),
-('Rajarhat', 7),
-('Ambawadi', 8);
-
--- Sample Data for Properties Table
-INSERT INTO properties (property_images, address, area_id, user_id, status) VALUES
-(NULL, 'Sample Address 1', 1, 1, 'AVAILABLE'),
-(NULL, 'Sample Address 2', 2, 2, 'AVAILABLE'),
-(NULL, 'Sample Address 3', 3, 3, 'AVAILABLE'),
-(NULL, 'Sample Address 4', 4, 4, 'RENTED'),
-(NULL, 'Sample Address 5', 5, 5, 'RENTED'),
-(NULL, 'Sample Address 6', 6, 6, 'AVAILABLE'),
-(NULL, 'Sample Address 7', 7, 7, 'AVAILABLE'),
-(NULL, 'Sample Address 8', 8, 8, 'AVAILABLE'),
-(NULL, 'Sample Address 9', 9, 9, 'RENTED'),
-(NULL, 'Sample Address 10', 10, 10, 'RENTED'),
-(NULL, 'Sample Address 11', 11, 11, 'AVAILABLE'),
-(NULL, 'Sample Address 12', 12, 12, 'AVAILABLE');
-
--- Sample Data for Visits Table
-INSERT INTO visits (user_id, property_id, visit_date) VALUES
-(1, 1, '2024-02-14'),
-(2, 2, '2024-02-14'),
-(3, 3, '2024-02-14'),
-(4, 4, '2024-02-14'),
-(5, 5, '2024-02-14'),
-(6, 6, '2024-02-14'),
-(1, 2, '2024-02-15'),
-(2, 3, '2024-02-15'),
-(3, 4, '2024-02-15'),
-(4, 5, '2024-02-15'),
-(5, 6, '2024-02-15'),
-(6, 1, '2024-02-15'),
-(1, 3, '2024-02-16'),
-(2, 4, '2024-02-16'),
-(3, 5, '2024-02-16'),
-(4, 6, '2024-02-16'),
-(5, 1, '2024-02-16'),
-(6, 2, '2024-02-16'),
-(1, 4, '2024-02-17'),
-(2, 5, '2024-02-17');
-
-...........................................................
--- Sample Data for Properties Table with Additional Columns
-INSERT INTO properties (property_images, address, area_id, user_id, status, tenant_type, flat_type) VALUES
-(NULL, 'Sample Address 1', 1, 1, 'AVAILABLE', 'BOTH', '_2BHK'),
-(NULL, 'Sample Address 2', 2, 2, 'AVAILABLE', 'FAMILY', '_1BHK'),
-(NULL, 'Sample Address 3', 3, 3, 'AVAILABLE', 'BACHELOR', '_3BHK'),
-(NULL, 'Sample Address 4', 4, 4, 'RENTED', 'FAMILY', '_2BHK'),
-(NULL, 'Sample Address 5', 5, 5, 'RENTED', 'BOTH', '_RK'),
-(NULL, 'Sample Address 6', 6, 6, 'AVAILABLE', 'BACHELOR', '_1BHK'),
-(NULL, 'Sample Address 7', 7, 7, 'AVAILABLE', 'BOTH', '_3BHK'),
-(NULL, 'Sample Address 8', 8, 8, 'AVAILABLE', 'FAMILY', '_2BHK'),
-(NULL, 'Sample Address 9', 9, 9, 'RENTED', 'BACHELOR', '_1BHK'),
-(NULL, 'Sample Address 10', 10, 10, 'RENTED', 'FAMILY', '_2BHK'),
-(NULL, 'Sample Address 11', 11, 11, 'AVAILABLE', 'BOTH', '_3BHK'),
-(NULL, 'Sample Address 12', 12, 12, 'AVAILABLE', 'FAMILY', '_2BHK');
-
--- Updated Users Table with New Passwords
-INSERT INTO users (email, password, name, contact_number, profile_picture, properties_left,subscription_end_date,subscription_start_date,subscription_type) VALUES
-('john.doe@example.com', 'f91e15dbec69fc40f81f0876e7009648', 'John Doe', '+91 1234567890', NULL, 5,NULL,NULL,NULL),
-('sara.smith@example.com', 'f91e15dbec69fc40f81f0876e7009648', 'Sara Smith', '+91 9876543210', NULL, 5,NULL,NULL,NULL),
-('mike.jones@example.com', 'f91e15dbec69fc40f81f0876e7009648', 'Mike Jones', '+91 7777777777', NULL, 5,NULL,NULL,NULL),
-('emma.johnson@example.com', 'f91e15dbec69fc40f81f0876e7009648', 'Emma Johnson', '+91 9999999999', NULL, 5,NULL,NULL,NULL),
-('alex.wilson@example.com', 'f91e15dbec69fc40f81f0876e7009648', 'Alex Wilson', '+91 6666666666', NULL, 5,NULL,NULL,NULL),
-('grace.miller@example.com', 'f91e15dbec69fc40f81f0876e7009648', 'Grace Miller', '+91 5555555555', NULL, 5,NULL,NULL,NULL),
-('neha.verma@example.com', 'f91e15dbec69fc40f81f0876e7009648', 'Neha Verma', '+91 8888888888', NULL, 5,NULL,NULL,NULL),
-('vikram.singh@example.com', 'f91e15dbec69fc40f81f0876e7009648', 'Vikram Singh', '+91 7777777777', NULL, 5,NULL,NULL,NULL),
-('sonali.rai@example.com', 'f91e15dbec69fc40f81f0876e7009648', 'Sonali Rai', '+91 9999999999', NULL, 5,NULL,NULL,NULL),
-('amit.kumar@example.com', 'f91e15dbec69fc40f81f0876e7009648', 'Amit Kumar', '+91 6666666666', NULL, 5,NULL,NULL,NULL),
-('tanvi.sharma@example.com', 'f91e15dbec69fc40f81f0876e7009648', 'Tanvi Sharma', '+91 5555555555', NULL, 5,NULL,NULL,NULL),
-('rahul.verma@example.com', 'f91e15dbec69fc40f81f0876e7009648', 'Rahul Verma', '+91 4444444444', NULL, 5,NULL,NULL,NULL);
+('Rajarhat', 7);
 
 
+INSERT INTO users (email, password, name, contact_number, properties_left, subscription_end_date, subscription_start_date, subscription_type) VALUES
+('john.doe@example.com', 'f91e15dbec69fc40f81f0876e7009648', 'John Doe', '1234567890', 5, '2023-12-31', '2023-01-01', NULL),
+('sara.smith@example.com', 'f91e15dbec69fc40f81f0876e7009648', 'Sara Smith', '9876543210', 5, '2023-12-31', '2023-01-01', NULL),
+('mike.jones@example.com', 'f91e15dbec69fc40f81f0876e7009648', 'Mike Jones', '7777777777', 5, '2023-12-31', '2023-01-01', NULL),
+('emma.johnson@example.com', 'f91e15dbec69fc40f81f0876e7009648', 'Emma Johnson', '9999999999', 5, '2023-12-31', '2023-01-01', NULL),
+('alex.wilson@example.com', 'f91e15dbec69fc40f81f0876e7009648', 'Alex Wilson', '6666666666', 5, '2023-12-31', '2023-01-01', NULL),
+('grace.miller@example.com', 'f91e15dbec69fc40f81f0876e7009648', 'Grace Miller', '5555555555', 5, '2023-12-31', '2023-01-01', NULL),
+('neha.verma@example.com', 'f91e15dbec69fc40f81f0876e7009648', 'Neha Verma', '8888888888', 5, '2023-12-31', '2023-01-01', NULL),
+('vikram.singh@example.com', 'f91e15dbec69fc40f81f0876e7009648', 'Vikram Singh', '7777777777', 5, '2023-12-31', '2023-01-01', NULL),
+('sonali.rai@example.com', 'f91e15dbec69fc40f81f0876e7009648', 'Sonali Rai', '9999999999', 5, '2023-12-31', '2023-01-01', NULL),
+('amit.kumar@example.com', 'f91e15dbec69fc40f81f0876e7009648', 'Amit Kumar', '6666666666', 5, '2023-12-31', '2023-01-01', NULL),
+('tanvi.sharma@example.com', 'f91e15dbec69fc40f81f0876e7009648', 'Tanvi Sharma', '5555555555', 5, '2023-12-31', '2023-01-01', NULL),
+('rahul.verma@example.com', 'f91e15dbec69fc40f81f0876e7009648', 'Rahul Verma', '4444444444', 5, '2023-12-31', '2023-01-01', NULL);
+
+
+
+INSERT INTO properties (address, carpet_area, flat_type, price, status, tenant_type, area_id, user_id) VALUES
+('123 Main St, Kothrud', 800, '_2BHK', 20000, 'AVAILABLE', 'FAMILY', 1, 1),
+('456 Elm St, Bandra', 1000, '_3BHK', 35000, 'AVAILABLE', 'FAMILY', 2, 2),
+('789 Oak St, Connaught Place', 600, '_1BHK', 15000, 'AVAILABLE', 'BACHELOR', 3, 3),
+('321 Pine St, Whitefield', 1200, '_3BHK', 30000, 'RENTED', 'FAMILY', 4, 4),
+('987 Maple St, Viman Nagar', 700, '_2BHK', 18000, 'AVAILABLE', 'BACHELOR', 5, 5),
+('654 Cedar St, Juhu', 900, '_3BHK', 40000, 'AVAILABLE', 'FAMILY', 6, 6),
+('123 Cherry St, Dwarka', 800, '_2BHK', 22000, 'AVAILABLE', 'FAMILY', 7, 7),
+('456 Walnut St, Koramangala', 1100, '_3BHK', 35000, 'AVAILABLE', 'FAMILY', 8, 8),
+('789 Pineapple St, Aundh', 750, '_2BHK', 20000, 'AVAILABLE', 'BACHELOR', 9, 9),
+('321 Banana St, Malleshwaram', 950, '_3BHK', 32000, 'RENTED', 'FAMILY', 10, 10);

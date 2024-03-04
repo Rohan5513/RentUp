@@ -18,10 +18,28 @@ const Profile = () => {
 
 
   useEffect(() => {
-    if (user!==null) {
-      setUserProfilePicture(JSON.parse(localStorage.getItem('profilePicture')));
-    }
-  });
+    const fetchProfilePicture = async () => {
+      if (user !== null) {
+        try {
+          const response1 = await axios.get(`http://localhost:8080/users/profile/${user.contactNumber}`, {
+            responseType: 'arraybuffer',
+          });
+  
+          const base64Image = btoa(
+            new Uint8Array(response1.data).reduce(
+              (data, byte) => data + String.fromCharCode(byte),
+              ''
+            )
+          );
+  
+          setUserProfilePicture(`data:${response1.headers['content-type']};base64,${base64Image}`);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    };
+    fetchProfilePicture();
+  }, [user]);   
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -72,22 +90,6 @@ const Profile = () => {
               name="userName"
               value={formData.userName}
               onChange={handleChange}
-            />
-          </div>
-          <div>
-            <label>Profile Picture:</label>
-            {userProfilePictureRender && (
-              <img src={userProfilePictureRender} alt="ProfilePicture" />
-            )}
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) =>
-                setFormData({
-                  ...formData,
-                  userProfilePicture: e.target.files[0],
-                })
-              }
             />
           </div>
           <div className="button-group">

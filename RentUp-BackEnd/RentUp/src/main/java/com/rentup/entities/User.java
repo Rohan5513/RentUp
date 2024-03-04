@@ -1,6 +1,5 @@
 package com.rentup.entities;
 
-import com.rentup.entities.UserProfilePicture;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -42,6 +41,5 @@ public class User {
     @Column(name ="subscription_end_date")
     private Date subscriptionEndDate=Date.valueOf(LocalDate.now().minusDays(5));
 
-    @OneToOne(mappedBy = "user",cascade = CascadeType.ALL ,orphanRemoval = true)
-    private UserProfilePicture profilePicture;
+
 }

@@ -9,7 +9,7 @@ const Signup = () => {
     userEmail: "",
     userPassword: "",
     userContactNumber: "",
-    propertiesLeft: 5, // Set the default value to 5
+    profilePhoto: null,
   };
 
   const [formData, setFormData] = useState(initialFormData);
@@ -20,10 +20,17 @@ const Signup = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
     setFormData({
       ...formData,
       [name]: value,
+    });
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setFormData({
+      ...formData,
+      profilePhoto: file,
     });
   };
 
@@ -72,29 +79,38 @@ const Signup = () => {
 
     if (isValid) {
       try {
-        const userObject = {
-           email: formData.userEmail,
-          password: formData.userPassword,
-          name: formData.userName,
-          contactNumber: formData.userContactNumber,
-          
-        };
+        const formDataObj = new FormData();
+        formDataObj.append("name", formData.userName);
+        formDataObj.append("email", formData.userEmail);
+        formDataObj.append("password", formData.userPassword);
+        formDataObj.append("contactNumber", formData.userContactNumber);
+
+        if (formData.profilePhoto) {
+          formDataObj.append("profilePhoto", formData.profilePhoto);
+        }
 
         const response = await axios.post(
-          "http://localhost:8080/users/register",
-          userObject
+          'http://localhost:8080/users/register',
+          formDataObj,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          }
         );
 
         if (response.status === 201) {
           setMessage("Signup successful!");
           setFormData(initialFormData);
           setBackendError("");
-          history.push("/login"); // Redirect to login page
+          history.push("/login");
         } else {
           setBackendError("Error: " + response.data.message);
         }
       } catch (error) {
-        setBackendError("Error: " + (error.response?.data.message || error.message));
+        setBackendError(
+          "Error: " + (error.response?.data.message || error.message)
+        );
       }
     }
   };
@@ -170,6 +186,14 @@ const Signup = () => {
           {errors.confirmPassword && (
             <div className="error-message">{errors.confirmPassword}</div>
           )}
+        </div>
+        <div className="form-group">
+          <label htmlFor="profilePhoto">Profile Photo:</label>
+          <input
+            type="file"
+            name="profilePhoto"
+            onChange={handleFileChange}
+          />
         </div>
         <div className="button-group">
           <button type="reset" className="reset-btn" onClick={handleReset}>

@@ -40,7 +40,7 @@ public class UserController {
 			@RequestPart("name") String name,@RequestPart("email") String email
 			,@RequestPart("password") String password,
 			@RequestPart("contactNumber") String contactNumber,
-			@RequestPart("profilePicture") MultipartFile profilePicture
+			@RequestPart("profilePhoto") MultipartFile profilePicture
 	) throws Exception {
 			UserDTO userDTO = new UserDTO();
 			userDTO.setName(name);
@@ -50,7 +50,6 @@ public class UserController {
 			return ResponseEntity.
 					status(HttpStatus.CREATED).
 					body(userService.addUser(userDTO,profilePicture));
-
 	}
 
 

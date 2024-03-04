@@ -47,46 +47,19 @@ const Login = () => {
         );
         setUser(response.data); 
         localStorage.setItem("user", JSON.stringify(response.data));
-        setShowButtons(false); // Hide login and signup buttons
-        const user1 = JSON.parse(localStorage.getItem("user"));
-          try{
-            const response1 = await axios.get(`http://localhost:8080/users/profile/${user1.contactNumber}`, {
-        responseType: 'arraybuffer',
-      });
-
-      const base64Image = btoa(
-        new Uint8Array(response1.data).reduce(
-          (data, byte) => data + String.fromCharCode(byte),
-          ''
-        )
-      );
-          
-      localStorage.setItem('profilePicture',JSON.stringify(`data:${response1.headers['content-type']};base64,${base64Image}`));
-
-          }
-          catch(error){
-            console.log(error);
-          }
-
-        // Redirect user to home page after successful login
+        setShowButtons(false); 
         history.push("/");
       } catch (error) {
         if (error.response) {
-          // Server responded with a status code other than 2xx
           console.error("Invalid Mobile Number or password");
-          // Set backend error message for display
           setBackendError("Invalid Mobile Number or password");
         } else if (error.request) {
-          // The request was made but no response was received
           console.error("Invalid Mobile Number or password");
-          // Handle no response scenario, for example, display a generic error message
           setBackendError(
             "Error: Unable to connect to the server. Please try again later."
           );
         } else {
-          // Something happened in setting up the request that triggered an error
           console.error("Invalid Mobile Number or password");
-          // Handle other errors, for example, display a generic error message
           setBackendError("Invalid Mobile Number or password");
         }
       }
@@ -133,7 +106,7 @@ const Login = () => {
             <div className="error-message">{errors.password}</div>
           )}
         </div>
-        {showButtons && ( // Conditionally render login and signup buttons
+        {showButtons && ( 
           <button type="submit" className="submit-btn">
             Login
           </button>
