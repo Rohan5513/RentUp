@@ -1,0 +1,42 @@
+
+
+.visitors-container {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+.visitors-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.visitor-item {
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.visitor-details {
+  margin-bottom: 10px;
+}
+
+/* .visitor-buttons {
+  display: flex;
+  justify-content: space-between
+   
+} */
+
+
+.visitor-buttons {
+  display: flex;
+  justify-content: flex-start /* Align buttons to the end */
+}
+
+.visitor-buttons button {
+  margin-left: 10px; /* Add some margin between buttons */
+}
+
+.reject-button {
+  background-color: red; /* Set background color to red */
+}

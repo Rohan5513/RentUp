@@ -4,6 +4,7 @@ package com.rentup.services;
 import com.rentup.dto.UserDTO;
 import com.rentup.entities.Property;
 import com.rentup.entities.PropertyVisit;
+import com.rentup.entities.PropertyVisitStatus;
 import com.rentup.entities.User;
 import com.rentup.repository.PropertyRepository;
 import com.rentup.repository.PropertyVisitRepository;
@@ -42,6 +43,7 @@ public class PropertyVisitServiceImpl implements PropertyVisitService{
         visit.setUser(user.getUserId());
         visit.setProperty(property.getPropertyId());
         visit.setVisitDate(date);
+        visit.setStatus(PropertyVisitStatus.WAITING);
         propertyVisitRepository.save(visit);
         return mapper.map(updatedUser,UserDTO.class);
     }
@@ -56,4 +58,20 @@ public class PropertyVisitServiceImpl implements PropertyVisitService{
         }
         return false;
     }
+
+	@Override
+	public void acceptVisit(int visitId) {
+		PropertyVisit visit = propertyVisitRepository.findById(visitId).orElseThrow() ;
+		visit.setStatus(PropertyVisitStatus.ACCEPTED);
+		 propertyVisitRepository.save(visit);
+		
+	}
+
+	@Override
+	public void rejectVisit(int visitId) {
+		PropertyVisit visit = propertyVisitRepository.findById(visitId).orElseThrow() ;
+		visit.setStatus(PropertyVisitStatus.REJECTED);
+		 propertyVisitRepository.save(visit);
+		
+	}
 }

@@ -3,6 +3,7 @@ package com.rentup.controller;
 import java.io.IOException;
 
 import com.rentup.dto.UserDTO;
+import com.rentup.repository.UserRepository;
 import com.rentup.request.UserLoginRequest;
 import com.rentup.services.UserService;
 import org.json.JSONObject;
@@ -25,6 +26,8 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private UserRepository repo ;
 	
 
 	
@@ -33,8 +36,7 @@ public class UserController {
 	public ResponseEntity<?> getAllUsers(){
 		return ResponseEntity.ok(userService.getAllUsers()) ;
 	}
-
-
+	
 	@PostMapping(value = "/register", consumes = "multipart/form-data")
 	public ResponseEntity<?> addUser(
 			@RequestPart("name") String name,@RequestPart("email") String email
@@ -75,6 +77,12 @@ public class UserController {
 	public ResponseEntity<?> getUserByMobileNumber(@PathVariable String mobileNumber){
 		return ResponseEntity.status(HttpStatus.OK).body(userService.getUserByMobileNumber(mobileNumber));
 	}
+	
+	@GetMapping("/byId/{userId}")
+	public ResponseEntity<?> getUserById(@PathVariable int userId){
+		
+		return ResponseEntity.status(HttpStatus.OK).body(repo.findById(userId));
+	}
 
 	
 
@@ -101,7 +109,7 @@ public class UserController {
 		return userService.getSubscriptionType(mobileNumber);
 	}
 	
-	@PutMapping("/{userId}")
+	@PutMapping("{userId}")
 	public ResponseEntity<?> updateUserProfile(@PathVariable Integer userId,
 											   @RequestParam("userName") String userName,
 											   @RequestParam("userEmail") String userEmail
