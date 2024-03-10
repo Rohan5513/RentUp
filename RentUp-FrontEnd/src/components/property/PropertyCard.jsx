@@ -4,15 +4,15 @@ import { useUser } from "../common/UserProvider";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 
-const PropertyCard = ({ property }) => {
+const PropertyCard = ({ property, image }) => {
   const { user, setUser } = useUser();
   const [propertiesLeft, setPropertiesLeft] = useState(10);
   const [canView, setCanView] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [selectedDate, setSelectedDate] = useState("");
   const [isScheduled, setIsScheduled] = useState(false);
-  // console.log()
   const history = useHistory();
+
   useEffect(() => {
     if (user !== null) {
       setPropertiesLeft(user.propertiesLeft);
@@ -26,9 +26,6 @@ const PropertyCard = ({ property }) => {
           const response = await axios.get(
             `http://localhost:8080/visit/schedule/${user.userId}/${property.propertyId}`
           );
-          // if (response.data === true) {
-          //   console.log(property.address)
-          // }
           setIsScheduled(response.data);
         } catch (error) {
           console.error("Error occurred:", error);
@@ -36,7 +33,7 @@ const PropertyCard = ({ property }) => {
       }
     };
 
-    scheduleVisit(); // Call the async function
+    scheduleVisit();
   }, [user, property]);
 
   useEffect(() => {
@@ -75,7 +72,6 @@ const PropertyCard = ({ property }) => {
       `http://localhost:8080/visit/schedule`,
       visitReq
     );
-    console.log(response.data);
     setUser(response.data);
     setShowModal(false);
   };
@@ -96,10 +92,7 @@ const PropertyCard = ({ property }) => {
               ""
             )}
             {isScheduled ? (
-              <button
-                className="close-button"
-                onClick={() => setShowModal(false)}
-              >
+              <button className="close-button" onClick={() => setShowModal(false)}>
                 Close
               </button>
             ) : (
@@ -114,10 +107,7 @@ const PropertyCard = ({ property }) => {
                   required
                 />
                 <button type="submit">Schedule visit</button>
-                <button
-                  className="close-button"
-                  onClick={() => setShowModal(false)}
-                >
+                <button className="close-button" onClick={() => setShowModal(false)}>
                   Close
                 </button>
               </form>
@@ -127,23 +117,19 @@ const PropertyCard = ({ property }) => {
       )}
       <div className={`property-card ${showModal ? "blurred" : ""}`}>
         <div className="property-images">
-          <img className="property-image" src="" alt="Property Image" />
+          <img className="property-image" src={image} alt="Property Image" />
         </div>
         <div className="property-details">
           <div>
             <h3 className="property-title">{property.address}</h3>
-            <p className="property-info">
-              City: {property.areaId.city.cityName}
-            </p>
+            <p className="property-info">City: {property.areaId.city.cityName}</p>
             <p className="property-info">Area: {property.areaId.areaName}</p>
-            <p className="property-info">
-              Carpet Area: {property.carpetArea} sq. ft.
-            </p>
+            <p className="property-info">Carpet Area: {property.carpetArea} sq. ft.</p>
             <p className="property-info">Tenant Type: {property.tenantType}</p>
             <p className="property-info">Flat Type: {property.flatType}</p>
             <p className="property-info">Price: {property.price}</p>
           </div>
-          <div>
+          <div className="button-container">
             {canView ? (
               isScheduled ? (
                 <button className="schedule-visit" onClick={handleVisitClick}>
@@ -155,11 +141,8 @@ const PropertyCard = ({ property }) => {
                 </button>
               )
             ) : (
-              <p
-                style={{ color: "red", fontSize: "medium", fontWeight: "bold" }}
-              >
-                You have Exhausted your free Visits. Buy Subscription to
-                continue
+              <p style={{ color: "red", fontSize: "medium", fontWeight: "bold" }}>
+                You have exhausted your free visits. Buy a subscription to continue.
               </p>
             )}
           </div>

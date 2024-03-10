@@ -66,10 +66,6 @@ export const getNavData = (user) => {
     path: "/property",
   },
     // Your other navigation items here
-    {
-      text: "Visits Requested",
-      path: "/visits",
-    },
     { text: user ? 'Logout' : 'Login', path: user? '/logout':'/login'},
     { text:user? 'Profile':'Sign up', path: user?'/profile':'/signup' },
   ];

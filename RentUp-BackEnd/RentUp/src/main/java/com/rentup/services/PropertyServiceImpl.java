@@ -131,6 +131,11 @@ public class PropertyServiceImpl implements PropertyService {
     public byte[] getPropertyPicture(Integer propertyId) {
         Optional<Property> property = propertyRepository.findById(propertyId);
         PropertyPicture propertyPicture = propertyPictureRepository.findByProperty(property);
+
+        if(propertyPicture == null){
+            return "No image found".getBytes();
+        }
+
         return propertyPicture.getContent();
     }
 

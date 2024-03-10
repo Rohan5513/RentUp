@@ -21,8 +21,7 @@ public class PropertyVisit {
     private Integer property;
 
     private Date visitDate;
-    
-    
+
     
     private PropertyVisitStatus status ;
 }

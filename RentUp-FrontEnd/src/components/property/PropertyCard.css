@@ -29,8 +29,9 @@
 }
 
 .property-card {
+  display: flex;
+  flex-direction: column;
   border: 1px solid #ddd;
-  padding: 15px;
   margin: 15px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -39,4 +40,52 @@
 
 .property-card.blurred {
   filter: blur(5px); 
+}
+
+.property-images {
+  overflow: hidden;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.property-image {
+  width: 100%;
+  height: auto;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.property-details {
+  flex: 1;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.property-title {
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.property-info {
+  margin: 5px 0;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.schedule-visit {
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 17px;
+  cursor: pointer;
+  text-decoration: none;
 }
