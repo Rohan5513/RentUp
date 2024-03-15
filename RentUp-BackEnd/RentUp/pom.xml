@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.rentup</groupId>
 	<artifactId>RentUp</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0</version>
 	<name>RentUp</name>
 	<description>Backend for RentUp App</description>
 	<properties>
