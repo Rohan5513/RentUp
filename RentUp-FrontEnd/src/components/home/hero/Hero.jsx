@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Heading from "../../common/Heading";
 import "./hero.css";
 import axios from "axios";
-import { getCities } from "../../data/Data";
+import { getCities, serverUrl } from "../../data/Data";
 import { getAllProperties } from "../../data/Data";
 import PropertyList from "../../property/PropertyList";
 
@@ -142,7 +142,7 @@ const Hero = () => {
   const fetchAreas = async (selectedCity) => {
     try {
       const response = await axios.get(
-        `http://localhost:8080/area/${selectedCity}`
+        `${serverUrl}/area/${selectedCity}`
       );
       setAreas(response.data);
     } catch (error) {

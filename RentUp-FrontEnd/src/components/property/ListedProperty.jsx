@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
 import { useUser } from "../common/UserProvider";
 import "./ListedProperty.css";
+import { serverUrl } from "../data/Data";
 
 const ListedProperty = () => {
   const { user } = useUser();
@@ -15,14 +16,14 @@ const ListedProperty = () => {
     const fetchProperties = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/properties/users/${user.userId}`
+          `${serverUrl}/properties/users/${user.userId}`
         );
         setProperties(response.data);
 
         const imagePromises = response.data.map(async (property) => {
           try {
             const response1 = await axios.get(
-              `http://localhost:8080/properties/image/${property.propertyId}`,
+              `${serverUrl}/properties/image/${property.propertyId}`,
               {
                 responseType: "arraybuffer",
               }
@@ -55,7 +56,7 @@ const ListedProperty = () => {
 
   const handleRentedOut = async (propertyId) => {
     try {
-      await axios.put(`http://localhost:8080/properties/${propertyId}`, {
+      await axios.put(`${serverUrl}/properties/${propertyId}`, {
         status: "Rented Out",
       });
       setRentedProperties([...rentedProperties, propertyId]);

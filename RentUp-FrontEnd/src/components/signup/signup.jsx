@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import "./style.css";
+import { serverUrl } from "../data/Data";
 
 const Signup = () => {
   const initialFormData = {
@@ -90,7 +91,7 @@ const Signup = () => {
         }
 
         const response = await axios.post(
-          'http://localhost:8080/users/register',
+          `${serverUrl}/users/register`,
           formDataObj,
           {
             headers: {

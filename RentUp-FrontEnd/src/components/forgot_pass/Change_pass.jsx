@@ -3,6 +3,7 @@ import axios from "axios";
 import { useHistory, useLocation } from "react-router-dom";
 import '../forgot_pass/Change_pass.css'
 import { useUser } from "../common/UserProvider"; // Import useUser hook from context
+import { serverUrl } from "../data/Data";
 
 const ChangePass = () => {
   const { setUser } = useUser(); 
@@ -44,7 +45,7 @@ const ChangePass = () => {
     const isValid = validateForm();
     if (isValid) {
       try {
-        const response = await axios.put(`http://localhost:8080/users/${mobileNumber}/${formData.newpass}`);
+        const response = await axios.put(`${serverUrl}/users/${mobileNumber}/${formData.newpass}`);
         setPassChange(true);
         setTimeout(() => {
             history.push('/');

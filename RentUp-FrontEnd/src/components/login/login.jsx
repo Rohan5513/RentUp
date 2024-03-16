@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
 import "./Login.css"; // Import your CSS file
 import { useUser } from "../common/UserProvider"; // Import useUser hook from context
+import { serverUrl } from "../data/Data";
 
 const Login = () => {
   const { setUser,user } = useUser(); 
@@ -42,7 +43,7 @@ const Login = () => {
     if (isValid) {
       try {
         const response = await axios.post(
-          "http://localhost:8080/users/login",
+          `${serverUrl}/users/login`,
           formData
         );
         setUser(response.data); 

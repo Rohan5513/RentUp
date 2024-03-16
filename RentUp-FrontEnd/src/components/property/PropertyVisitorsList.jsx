@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./PropertyVisitorsList.css";
+import { serverUrl } from "../data/Data";
 
 const PropertyVisitorsList = ({ match }) => {
   const propertyId = match.params.propertyId;
@@ -13,7 +14,7 @@ const PropertyVisitorsList = ({ match }) => {
     const fetchVisitors = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/visit/property-visits/${propertyId}`
+          `${serverUrl}/visit/property-visits/${propertyId}`
         );
         // Assuming the response contains visit details with userId
         const visits = response.data;
@@ -22,7 +23,7 @@ const PropertyVisitorsList = ({ match }) => {
         // Fetch the user names for each userId
         const userNamesPromises = visits.map(async (visit) => {
           const userResponse = await axios.get(
-            `http://localhost:8080/users/byId/${visit.user}`
+            `${serverUrl}/users/byId/${visit.user}`
           );
           const userData = userResponse.data;
           setUsers(userData);
@@ -49,7 +50,7 @@ const PropertyVisitorsList = ({ match }) => {
 
   const handleAcceptVisit = async (visitId) => {
     try {
-      await axios.put(`http://localhost:8080/visit/accept/${visitId}`, {
+      await axios.put(`${serverUrl}/visit/accept/${visitId}`, {
         status: "ACCEPTED",
       });
       // Update the visitors list after accepting the visit
@@ -67,7 +68,7 @@ const PropertyVisitorsList = ({ match }) => {
 
   const handleRejectVisit = async (visitId) => {
     try {
-      await axios.put(`http://localhost:8080/visit/reject/${visitId}`, {
+      await axios.put(`${serverUrl}/visit/reject/${visitId}`, {
         status: "REJECTED",
       });
       // Update the visitors list after rejecting the visit

@@ -3,6 +3,7 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import '../forgot_pass/forgot_pass.css'
 import { useUser } from "../common/UserProvider"; 
+import { serverUrl } from "../data/Data";
 
 const ForgotPass = () => {
     const history = useHistory();
@@ -28,7 +29,7 @@ const ForgotPass = () => {
     const mobileNumber = data.get('mobileNumber');
 
     try {
-      const response = await axios.get(`http://localhost:8080/users/${mobileNumber}`);
+      const response = await axios.get(`${serverUrl}/users/${mobileNumber}`);
       if (response.data == false) {
         setIsUser(false);
       } else {

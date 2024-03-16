@@ -1,5 +1,5 @@
 import React from "react";
-import { price } from "../../data/Data";
+import { price, serverUrl } from "../../data/Data";
 import { useUser } from "../../common/UserProvider"; 
 import { useHistory } from "react-router-dom";
 import axios from "axios";
@@ -9,7 +9,7 @@ const PriceCard = () => {
   const history = useHistory();
   const createOrder = async (price) => {
     try {
-      const response = await fetch('http://localhost:8080/users/create_order', {
+      const response = await fetch(`${serverUrl}/users/create_order`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -41,7 +41,7 @@ const PriceCard = () => {
             rzp.close();
 
             try{
-              const response =  axios.put(`http://localhost:8080/users/subscription/${user.user.contactNumber}/${plan}`)
+              const response =  axios.put(`${serverUrl}/users/subscription/${user.user.contactNumber}/${plan}`)
               // console.log(`http://localhost:8080/users/subscription/${user.user.contactNumber}/${plan}`);
             }
             catch(error){

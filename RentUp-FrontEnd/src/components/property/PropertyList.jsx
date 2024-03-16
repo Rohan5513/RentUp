@@ -5,6 +5,7 @@ import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { useUser } from "../common/UserProvider";
 import axios from "axios";
+import { serverUrl } from "../data/Data";
 
 const PropertyList = ({ properties }) => {
   const { user } = useUser();
@@ -24,7 +25,7 @@ const PropertyList = ({ properties }) => {
     const imagePromises = properties.map(async (property) => {
       try {
         const response1 = await axios.get(
-          `http://localhost:8080/properties/image/${property.propertyId}`,
+          `${serverUrl}/properties/image/${property.propertyId}`,
           {
             responseType: "arraybuffer",
           }

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useUser } from "../common/UserProvider";
 import axios from "axios";
 import "./Profile.css"; 
+import { serverUrl } from "../data/Data";
 
 const Profile = () => {
   const { user, setUser } = useUser();
@@ -21,7 +22,7 @@ const Profile = () => {
     const fetchProfilePicture = async () => {
       if (user !== null) {
         try {
-          const response1 = await axios.get(`http://localhost:8080/users/profile/${user.contactNumber}`, {
+          const response1 = await axios.get(`${serverUrl}/users/profile/${user.contactNumber}`, {
             responseType: 'arraybuffer',
           });
   
@@ -51,7 +52,7 @@ const Profile = () => {
     e.preventDefault();
     try {
       const response = await axios.put(
-        `http://localhost:8080/users/${user.userId}`,
+        `${serverUrl}/users/${user.userId}`,
         formData,
         {
           headers: {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./propertyManagement.css";
-import { getCities, getAreas } from "../data/Data";
+import { getCities, getAreas, serverUrl } from "../data/Data";
 import { useUser } from "../common/UserProvider";
 import { getAllProperties } from "../data/Data";
 import axios from "axios";
@@ -84,7 +84,7 @@ const PropertyManagement = () => {
           formObj.append('propertyPhoto',image[0]);
 
           const addResponse = await axios.post(
-            "http://localhost:8080/properties/add",
+            `${serverUrl}/properties/add`,
             formObj,
             {
               headers: {

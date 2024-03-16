@@ -3,6 +3,7 @@ import "../property/PropertyCard.css";
 import { useUser } from "../common/UserProvider";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
+import { serverUrl } from "../data/Data";
 
 const PropertyCard = ({ property, image }) => {
   const { user, setUser } = useUser();
@@ -24,7 +25,7 @@ const PropertyCard = ({ property, image }) => {
       if (user !== null && property !== null) {
         try {
           const response = await axios.get(
-            `http://localhost:8080/visit/schedule/${user.userId}/${property.propertyId}`
+            `${serverUrl}/visit/schedule/${user.userId}/${property.propertyId}`
           );
           setIsScheduled(response.data);
         } catch (error) {
@@ -69,7 +70,7 @@ const PropertyCard = ({ property, image }) => {
     };
 
     const response = await axios.post(
-      `http://localhost:8080/visit/schedule`,
+      `${serverUrl}/visit/schedule`,
       visitReq
     );
     setUser(response.data);
@@ -117,7 +118,7 @@ const PropertyCard = ({ property, image }) => {
       )}
       <div className={`property-card ${showModal ? "blurred" : ""}`}>
         <div className="property-images">
-          <img className="property-image" src={image} alt="Property Image" />
+          <img className="property-image" src={image} alt="Property Image" style={{ width: "480px", height: "480px" }} />
         </div>
         <div className="property-details">
           <div>
